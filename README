@@ -1,3 +1,17 @@
+
+* TriblerDroid *
+
+To build, 
+1. Run arno-build.bat in jni, after installing Android NDK and editing .bat
+2. Build .apk from Eclipse
+
+
+
+
+
+ORIGINAL
+========
+
 To rebuild the zip file and scripts jar:
 
 Use build.xml as an ant script.

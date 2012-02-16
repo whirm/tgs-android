@@ -12,7 +12,7 @@
     <activity
       android:name=".ScriptActivity"
       android:configChanges="keyboardHidden|orientation"
-      android:theme="@android:style/Theme.Translucent.NoTitleBar">
+      android:theme="@android:style/Theme.DeviceDefault.Light">
       <intent-filter>
         <action
           android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
       android:configChanges="keyboardHidden|orientation"
       android:name="com.googlecode.android_scripting.activity.FutureActivity" 
       android:theme="@android:style/Theme.Translucent"/>
-    <activity android:theme="@android:style/Theme.Translucent.NoTitleBar" 
+    <activity android:theme="@android:style/Theme.DeviceDefault.Light" 
       android:configChanges="keyboardHidden|orientation" 
       android:name="com.tudelft.triblerdroid.first.DialogActivity"/>
 </application>
