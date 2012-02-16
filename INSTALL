@@ -1,0 +1,46 @@
+===========================================================
+Demo smartphone code for decentralized stuff:
+
+  - decentral sharing of video and pictures
+  - decentral social network
+
+Goal 0) mixing Java, C++ and Python
+        (Status: PARTLY DONE)
+Goal 1) get Libswift and Dispersy running
+Goal 2) Build a decentralized social network on top of Dispersy
+Goal 3) World Peace
+===========================================================
+== For Developers ==
+===========================================================
+
+How to INSTALL
+
+
+for an example app where we can control the GUI in Java
+and we have Python code running in the background.
+       src/com/tudelft/triblerdroid/first/SwiftActivity.java
+is the main entry point.
+       res/raw/script.py
+contains the Python code that is run.
+
+To run this yourself, install Android SDK:
+   http://developer.android.com/sdk/index.html
+(I'm using Android 4.0 as that is what the test phone runs).
+And then install your own copy of Scripting-for-Android,
+following these instructions:
+http://jokar-johnk.blogspot.com/2011/02/how-to-make-android-app-with-sl4a.html
+I've used the offical repository
+       https://android-scripting.googlecode.com/hg/
+Not the rjmatthews62 one.
+
+This gives you a large set of projects (modules of Scripting4Android).
+For a number of those I had to set the Android target to Standard 4.0, and build quickaction.jar by hand.
+
+A thing to check is if the Android Service class that is now used
+is what we need, we may need to create a separate thread/process as services are not separate threads by default.
+
+===========================================================
+Current status:
+  16Feb: runs on Samsung Galaxy Nexus only
+         functionality: streaming download engine works (https://datatracker.ietf.org/doc/draft-ietf-ppsp-peer-protocol/)
+         Mixing with Python, still unstable
