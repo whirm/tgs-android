@@ -17,6 +17,7 @@
 package com.tudelft.triblerdroid.first;
 
 import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -39,6 +41,8 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import android.content.pm.*;
 
 import com.tudelft.triblerdroid.first.R;
 import com.googlecode.android_scripting.Constants;
@@ -75,7 +79,25 @@ public class ScriptActivity extends Activity {
 	
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+	
+	  super.onCreate(savedInstanceState);
+	  
+	  // Arno, 2012-02-16: See if required .apks are installed
+	  /*PackageManager pm = this.getPackageManager();
+	  try
+	  {
+		  ApplicationInfo appinfo = pm.getApplicationInfo("com.googlecode.pythonforandroid", 0);
+		  Log.w("TriblerDroid","Found Python4Android");
+	  }
+	  catch( PackageManager.NameNotFoundException e)
+	  {
+		  e.printStackTrace();
+		  
+		  Intent intent = new Intent(Intent.ACTION_VIEW);
+		  intent.setData(Uri.parse("market://details?id=com.googlecode.pythonforandroid"));
+		  startActivity(intent);
+	  }*/
+    
     if (Constants.ACTION_LAUNCH_SCRIPT_FOR_RESULT.equals(getIntent().getAction())) {
       setTheme(android.R.style.Theme_Dialog);
       setContentView(R.layout.dialog);

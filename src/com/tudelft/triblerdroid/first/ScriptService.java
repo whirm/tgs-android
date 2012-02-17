@@ -85,6 +85,29 @@ public class ScriptService extends ForegroundService {
 
 	@Override
 	public void onStart(Intent intent, final int startId) {
+		//Arno, 2012-02-16: keep swift part alive when scripting goes wrong 
+		try
+		{
+			doOnStart(intent,startId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		catch(ExceptionInInitializerError e)
+		{
+			// Arno: When the moons are not properly aligned, 
+			// Executing /data/data/com.googlecode.pythonforandroid/files/python/bin/python with arguments [/data/data/com.tudelf
+			// throws an 02-16 13:54:41.877 W/dalvikvm(27642): Exception Ljava/lang/UnsatisfiedLinkError;
+			// thrown while initializing Lcom/googlecode/android_scripting/Exec;
+			//
+			// I catch that Error here so swift part stays alive until moons
+			// are aligned again.
+			e.printStackTrace();
+		}
+	}
+		
+	private void doOnStart(Intent intent, final int startId) {
 		super.onStart(intent, startId);
 		String fileName = Script.getFileName(this);
 		Interpreter interpreter = mInterpreterConfiguration
