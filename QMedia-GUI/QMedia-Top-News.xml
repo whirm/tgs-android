@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/widget46"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+	android:id="@+id/widget49"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="Your Top News Stories"
+	android:typeface="monospace"
+	android:textStyle="bold" />
+<TableLayout
+	android:id="@+id/widget52"
+	android:layout_width="fill_parent"
+	android:layout_height="340dp"
+	android:orientation="vertical">
+<TableRow
+	android:id="@+id/widget53"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget56"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="It would be playing by the old rules to limit ourselves to one message" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget54"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget57"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Occupy Wall Street hits the road to 16 other cities" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget55"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget58"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="[video] Occupy Newt!! Occupy Sarasota demonstrates at Newt rally" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget110"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget114"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="[video] The foreign press gets OWS; the US media doesn&#8217;t" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget111"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget115"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="If the media informed the public, I wouldn&#8217;t need to march" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget112"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget116"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="America&#8217;s meanest town stops occupier from using tent as a sign" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget113"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget117"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Watch Jesse Lagreca skewer media hypocrisy in just 43 seconds" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget141"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget143"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="US Media: Are they faking ignorance about Occupy&#8217;s message?" />
+</TableRow>
+<TableRow
+	android:id="@+id/widget142"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<TextView
+	android:id="@+id/widget144"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="&#8220;We show up to protest peacefully&#8230;they show up for a riot&#8221;" />
+</TableRow>
+</TableLayout>
+<Button
+	android:id="@+id/widget119"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="Home  |  Social Network  |  News Sources" />
+<Button
+	android:id="@+id/widget121"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="TrustNodes   |   Network  |   Settings" />
+</LinearLayout>

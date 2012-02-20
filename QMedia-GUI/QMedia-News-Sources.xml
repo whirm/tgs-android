@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/widget46"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+	android:id="@+id/widget175"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="News Sources"
+	android:textSize="20sp"
+	android:textStyle="bold"
+	android:layout_gravity="center_horizontal" />
+<TextView
+	android:id="@+id/widget176"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="News sources determine what news items you collect and share with your friends." />
+<TextView
+	android:id="@+id/widget198"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+<Button
+	android:id="@+id/widget498"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Add News Source" />
+<TextView
+	android:id="@+id/widget199"
+	android:layout_width="wrap_content"
+	android:layout_height="34px"
+	android:text="News Sources (Click for latest stories)"
+	android:textStyle="bold" />
+<TextView
+	android:id="@+id/widget180"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Occupy Wall Street" />
+<TextView
+	android:id="@+id/widget181"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Occupy London" />
+<TextView
+	android:id="@+id/widget200"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Common Dreams" />
+<TextView
+	android:id="@+id/widget201"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="The American Prospect" />
+<TextView
+	android:id="@+id/widget202"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Democracy Now!" />
+<TextView
+	android:id="@+id/widget203"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Eschaton" />
+<TextView
+	android:id="@+id/widget205"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="WorkingForChange" />
+<TextView
+	android:id="@+id/widget204"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="World Socialist Web Site" />
+<TextView
+	android:id="@+id/widget208"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="The Economist" />
+<TextView
+	android:id="@+id/widget206"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="FOX News" />
+<TextView
+	android:id="@+id/widget207"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="BBC News World" />
+<Button
+	android:id="@+id/widget119"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="Home  |  Social Network  |  News Sources" />
+<Button
+	android:id="@+id/widget121"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="TrustNodes   |   Network  |   Settings" />
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	android:id="@+id/widget46"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+	android:id="@+id/widget175"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Social Network"
+	android:textSize="20sp"
+	android:textStyle="bold"
+	android:layout_gravity="center_horizontal" />
+<TextView
+	android:id="@+id/widget176"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Your friends influence which news sources you discover and suggested Top News stories." />
+<TextView
+	android:id="@+id/widget198"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+<Button
+	android:id="@+id/widget592"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Add Friend" />
+<TextView
+	android:id="@+id/widget199"
+	android:layout_width="wrap_content"
+	android:layout_height="34px"
+	android:text="Friends (Click to see their Public Wall)"
+	android:textStyle="bold" />
+<TextView
+	android:id="@+id/widget180"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Freddy Mac" />
+<TextView
+	android:id="@+id/widget181"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Marie Stuart" />
+<TextView
+	android:id="@+id/widget200"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Blue Eyes Nickname" />
+<TextView
+	android:id="@+id/widget201"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Mr. T Himself" />
+<TextView
+	android:id="@+id/widget202"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Justin Blieper" />
+<TextView
+	android:id="@+id/widget203"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Madonea" />
+<TextView
+	android:id="@+id/widget205"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Hard Worker Drone 655D37A" />
+<TextView
+	android:id="@+id/widget204"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Erica Borcher" />
+<TextView
+	android:id="@+id/widget208"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Milena Rachmaniocs" />
+<TextView
+	android:id="@+id/widget206"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Victim of Fame" />
+<TextView
+	android:id="@+id/widget207"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Not the 1 Percent" />
+<Button
+	android:id="@+id/widget119"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="Home  |  Social Network  |  News Sources" />
+<Button
+	android:id="@+id/widget121"
+	android:layout_width="320px"
+	android:layout_height="wrap_content"
+	android:text="TrustNodes   |   Network  |   Settings" />
+</LinearLayout>
