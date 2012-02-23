@@ -1,0 +1,96 @@
+
+* TriblerDroid *
+
+Preparations
+Eclipse with android SDK (my SDK path is ~/android/android-sdk-linux/)
+Install Android 4.0 (API 14)
+Create an AVD (target: 14, SD Card size: 200 MB)
+Get android-ndk from http://developer.android.com/sdk/ndk/index.html (my path is ~/android/android-ndk-r7b/)
+Get triblerdroid code (~/android/droid-release-0.1)
+$ svn co http://svn.tribler.org/abc/branches/droid-release-0.1
+
+
+To build, 
+1. Compile C++ code:
+
+$ ~/android/android-ndk-r7b/ndk-build -C ~/android/droid-release-0.1/jni/
+
+
+2. Build .apk from Eclipse (e.g. Run project (as android application))
+
+
+3. Patch .apk to add missing native lib
+
+$ ~/android-sdks/platform-tools/aapt a ~/android/droid-release-0.1/bin/droid-release-0.1.apk ~/android/droid-release-0.1/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so
+
+The output should be:
+'/home/raul/android/droid-release-0.1/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so' as 'com_googlecode_android_scripting_Exec.so'...
+
+
+4. Sign patched .apk using the andoroid debug key
+(IMPORTANT: this doesn't work on Linux)
+#FIXME!!!!
+
+$ jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android -digestalg SHA1 -sigalg MD5withRSA -sigfile CERT -signedjar ~/android/droid-release-0.1/bin/droid-release-0.1_COMPLETE.apk ~/android/droid-release-0.1/bin/droid-release-0.1.apk androiddebugkey
+
+The output should be:
+ updating: META-INF/MANIFEST.MF
+ updating: META-INF/CERT.SF
+ updating: META-INF/CERT.RSA
+  signing: assets/android.js
+  signing: assets/json2.js
+  signing: res/drawable/icon.png
+  signing: res/drawable/script_logo_48.png
+  signing: res/drawable/stat_sys_warning.png
+  signing: res/layout/dialog.xml
+  signing: res/layout/main.xml
+  signing: res/raw/script.py
+  signing: AndroidManifest.xml
+  signing: resources.arsc
+  signing: classes.dex
+  signing: lib/armeabi/libevent.so
+  signing: lib/armeabi/gdbserver
+  signing: com_googlecode_android_scripting_Exec.so
+
+
+4. Install and run .apk on emulator
+
+Given that you have created an AVD called 'test', run it on the emulator
+$ ~/android/android-sdk-linux/tools/emulator @test&
+Now, install PythonForAndroid (http://android-scripting.googlecode.com/files/PythonForAndroid_r4.apk)
+
+$ ~/android/android-sdk-linux/platform-tools/adb install ~/android/PythonForAndroid_r4.apk 
+And triblerdroid
+
+$ ~/android/android-sdk-linux/platform-tools/adb install ~/android/droid-release-0.1/bin/droid-release-0.1_COMPLETE.apk 
+Now, on the simulator screen, click on applications (middle button) and QMediaDroid
+
+Reply 'yes' to install Python
+Push 'install'
+(wait paciently...)
+Close the Python installation window
+
+DONE
+///////////
+
+==Useful commands==
+
+Debug logging:
+$ ~/android/android-sdk-linux/platform-tools/adb logcat > logname.log
+
+Uninstalling:
+$ ~/android/android-sdk-linux/platform-tools/adb uninstall com.tudelft.triblerdroid.first
+
+
+
+
+
+
+ORIGINAL
+========
+
+To rebuild the zip file and scripts jar:
+
+Use build.xml as an ant script.
+
+NOTE: Project settings (classpath etc) are stored in ".tmp/" and needs to be modified if changes are made to the build path.
