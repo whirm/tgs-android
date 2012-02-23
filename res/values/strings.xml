@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">App with swift and Python</string>
-    <string name="app_name">TriblerDroid</string>
-    <string name="loading">TriblerDroid ForegroundService...</string>
+    <string name="app_name">QMediaDroid</string>
+    <string name="loading">QMediaDroid ForegroundService...</string>
 </resources>
