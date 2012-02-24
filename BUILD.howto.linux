@@ -35,8 +35,6 @@ aapt for Linux gives you (so the android device won't find the library on the ri
 
 
 4. Sign patched .apk using the andoroid debug key
-(IMPORTANT: this doesn't work on Linux)
-#FIXME!!!!
 
 $ jarsigner -verbose -keystore ~/.android/debug.keystore -storepass android -keypass android -digestalg SHA1 -sigalg MD5withRSA -sigfile CERT -signedjar ~/android/droid-release-0.1/bin/droid-release-0.1_COMPLETE.apk ~/android/droid-release-0.1/bin/droid-release-0.1.apk androiddebugkey
 
