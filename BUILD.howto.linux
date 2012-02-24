@@ -9,6 +9,10 @@ Get android-ndk from http://developer.android.com/sdk/ndk/index.html (my path is
 Get triblerdroid code (~/android/droid-release-0.1)
 $ svn co http://svn.tribler.org/abc/branches/droid-release-0.1
 
+If you run a 64bits machine, you need to install (Ubuntu):
+ia32-libs-multiarch
+ia32-libs
+
 
 To build, 
 1. Compile C++ code:
