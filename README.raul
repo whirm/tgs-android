@@ -19,12 +19,19 @@ $ ~/android/android-ndk-r7b/ndk-build -C ~/android/droid-release-0.1/jni/
 2. Build .apk from Eclipse (e.g. Run project (as android application))
 
 
-3. Patch .apk to add missing native lib
+3. Patch .apk to add missing native lib 
 
-$ ~/android-sdks/platform-tools/aapt a ~/android/droid-release-0.1/bin/droid-release-0.1.apk ~/android/droid-release-0.1/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so
+IMPORTANT: aapt won't do the right thing on Linux (not in my box anyway). The
+hack is to use aapt for Windows with wine. Nasty, annoying, but it just works.
+
+$ cd ~/android-sdks/android/droid-release-0.1/hack
+$ wine aapt.exe a ../bin/droid-release-0.1.apk lib/armeabi/libcom_googlecode_android_scripting_Exec.so
 
 The output should be:
-'/home/raul/android/droid-release-0.1/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so' as 'com_googlecode_android_scripting_Exec.so'...
+'lib/armeabi/libcom_googlecode_android_scripting_Exec.so' as 'lib/armeabi/libcom_googlecode_android_scripting_Exec.so'...
+
+aapt for Linux gives you (so the android device won't find the library on the right place):
+'lib/armeabi/libcom_googlecode_android_scripting_Exec.so' as 'com_googlecode_android_scripting_Exec.so'...
 
 
 4. Sign patched .apk using the andoroid debug key
@@ -50,7 +57,7 @@ The output should be:
   signing: classes.dex
   signing: lib/armeabi/libevent.so
   signing: lib/armeabi/gdbserver
-  signing: com_googlecode_android_scripting_Exec.so
+  signing: lib/armeabi/libcom_googlecode_android_scripting_Exec.so
 
 
 4. Install and run .apk on emulator
@@ -82,15 +89,3 @@ Uninstalling:
 $ ~/android/android-sdk-linux/platform-tools/adb uninstall com.tudelft.triblerdroid.first
 
 
-
-
-
-
-ORIGINAL
-========
-
-To rebuild the zip file and scripts jar:
-
-Use build.xml as an ant script.
-
-NOTE: Project settings (classpath etc) are stored in ".tmp/" and needs to be modified if changes are made to the build path.
