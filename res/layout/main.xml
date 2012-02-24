@@ -37,10 +37,15 @@
 	    android:id="@+id/b3"
 	    android:layout_width="220dp"
 	    android:layout_height="36dp"
-	    android:layout_gravity="center_horizontal"
-	    android:text="Pioneer.One 720p" >
+	    android:layout_gravity="center"
+	    android:text="Pioneer.One 720p" />
 
-	</Button>
+	<Button
+	    android:id="@+id/b4"
+	    android:layout_width="220dp"
+	    android:layout_height="36dp"
+	    android:layout_gravity="center"
+	    android:text="DHT test" />
 
 	<VideoView
 	    android:id="@+id/surface_view"
