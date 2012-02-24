@@ -67,6 +67,7 @@ public class ScriptActivity extends Activity {
 	protected Button _b1;
 	protected Button _b2;
 	protected Button _b3;
+	protected Button _b4;
     protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
@@ -162,7 +163,8 @@ public class ScriptActivity extends Activity {
 	  _b1 = (Button) findViewById(R.id.b1);
 	  _b2 = (Button) findViewById(R.id.b2);
 	  _b3 = (Button) findViewById(R.id.b3);
-	
+	  _b4 = (Button) findViewById(R.id.b4);
+		
 	  destination = "/sdcard/swift/dummy.ts";	
 	
 	  
@@ -183,22 +185,33 @@ public class ScriptActivity extends Activity {
 	  	// Sintel 480p .ts rencoded to H.264 Baseline Profile
 	  	public void onClick(View v) {
 	      	hash = "109c16ac920a3358d5d9b17c9c4379b2395c44ba"; 
-	  		tracker = "192.16.125.242:9999";
+	  		tracker = "127.0.0.1:9999";
 	      	SwiftStartDownload();
 	      } 
 	  	
-	    });
+	  });
 	  
 	  _b3.setOnClickListener(new OnClickListener() {
-	
-	  	// Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
-	      public void onClick(View v) {
-	      	hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
-	      	tracker = "192.16.125.242:9999";
-	  		destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
-	      	SwiftStartDownload();
-	      } 
-	    });
+			
+		  // Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
+		  public void onClick(View v) {
+			  hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
+			  tracker = "127.0.0.1:9999";
+			  destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
+			  SwiftStartDownload();
+		  } 	
+	  });
+	  
+	  _b4.setOnClickListener(new OnClickListener() {
+		  
+		  // DHT test (popular BT infohash)
+		  public void onClick(View v) {
+			  hash = "86b39fe625a65a3845c4b215a8624b2ec7f30329"; 
+			  tracker = "127.0.0.1:9999";
+			  //destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
+			  SwiftStartDownload();
+		  } 
+	  });
 	  _text = ( TextView ) findViewById( R.id.text );
 	  
 	}
