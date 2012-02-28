@@ -1,0 +1,7 @@
+/bin
+/gen
+/externals
+/obj
+*.swp
+*~
+*.bak
