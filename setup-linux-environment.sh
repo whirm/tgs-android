@@ -87,6 +87,5 @@ fi
 cd $ROOT
 
 export PATH=$PATH:$PWD/externals/android-ndk-r7b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86/bin:$PWD/externals/android-scripting/tools/agcc
-
-
-
+echo "Building JNI"
+ndk-build -C jni
