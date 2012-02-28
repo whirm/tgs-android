@@ -6,3 +6,5 @@
 *~
 *.bak
 /libs/armeabi
+local.properties
+
