@@ -15,6 +15,7 @@ get_package_index(){
 
 
 echo "Ok, let's set this up..."
+echo ''
 
 mkdir -p externals/downloads
 
@@ -58,7 +59,6 @@ fi
 if [ ! -z "`uname -a | grep x86_64`" ]; then
     echo "64 bit system detected, installing ia32-libs"
     set +e
-    set -x
     dpkg -l ia32-libs &>/dev/null
     if [ $? == 1 ]; then
         set -e
@@ -72,6 +72,7 @@ if [ ! -z "`uname -a | grep x86_64`" ]; then
     if [ $? == 1 ]; then
         sudo apt-get install ia32-libs-multiarch
     else
+        echo ''
         echo "already installed, skipping"
     fi
     set -e
@@ -80,6 +81,7 @@ fi
 cd $ROOT/externals
 
 if [ ! -e android-scripting ]; then
+    echo ''
     echo "Cloning android scripting repo."
     hg clone https://code.google.com/p/android-scripting
 fi
@@ -87,5 +89,17 @@ fi
 cd $ROOT
 
 export PATH=$PATH:$PWD/externals/android-ndk-r7b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86/bin:$PWD/externals/android-scripting/tools/agcc
+echo ''
 echo "Building JNI"
 ndk-build -C jni
+
+echo ''
+echo "Copyiing libcom_googlecode_android_scripting_Exec.so..."
+cp hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so libs/armeabi/libcom_googlecode_android_scripting_Exec.so
+
+
+echo ''
+echo "Looks like everything went OK."
+echo 'Now you need to import the project to Eclipse and "Run as Android app", to generate and install the APK to your phone or emulator.'
+echo ''
+echo "Have fun!"
