@@ -94,12 +94,22 @@ echo "Building JNI"
 ndk-build -C jni
 
 echo ''
-echo "Copyiing libcom_googlecode_android_scripting_Exec.so..."
+echo "Copying libcom_googlecode_android_scripting_Exec.so..."
 cp hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so libs/armeabi/libcom_googlecode_android_scripting_Exec.so
 
 
 echo ''
+echo "Setting up local project configuration..."
+android update project -p .
+
+
+echo ''
 echo "Looks like everything went OK."
+echo ''
 echo 'Now you need to import the project to Eclipse and "Run as Android app", to generate and install the APK to your phone or emulator.'
+echo ''
+echo '                                OR'
+echo ''
+echo "Execute \"ant debug\" from the root's project dir. The .apk file will end up in bin/"
 echo ''
 echo "Have fun!"
