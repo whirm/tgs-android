@@ -34,7 +34,7 @@ if [ ! -e android-sdk-linux ]; then
 fi
 
 if [ ! -e android-ndk-r7b ]; then
-    tar xapf downloads/$SDK_FILE
+    tar xapf downloads/$NDK_FILE
 fi
 
 if [ ! -e android-sdk-linux/platforms/android-14 ]; then
@@ -53,8 +53,6 @@ if [ ! -e android-sdk-linux/platforms/android-14 ]; then
 
     platform-tools/adb kill-server
 fi
-
-#cd $ROOT/externals
 
 if [ ! -z "`uname -a | grep x86_64`" ]; then
     echo "64 bit system detected, installing ia32-libs"
@@ -80,18 +78,20 @@ fi
 
 cd $ROOT/externals
 
-if [ ! -e android-scripting ]; then
-    echo ''
-    echo "Cloning android scripting repo."
-    hg clone https://code.google.com/p/android-scripting
-fi
+#We aren't using this ATM
+#if [ ! -e android-scripting ]; then
+#    echo ''
+#    echo "Cloning android scripting repo."
+#    hg clone https://code.google.com/p/android-scripting
+#fi
 
-#cd $ROOT
+cd $ROOT
 
-#export PATH=$PATH:$PWD/externals/android-ndk-r7b:$PWD/externals/android-scripting/tools/agcc
+export PATH=$PATH:$PWD/externals/android-ndk-r7b:$PWD/externals/android-sdk-linux/tools:$PWD/externals/android-sdk-linux/platform-tools:$PWD/externals/android-scripting/tools/agcc
+
 echo ''
 echo "Building JNI"
-$ROOT/externals/android-ndk-r7b/ndk-build -C $ROOT/jni
+ndk-build -C $ROOT/jni
 
 echo ''
 echo "Copying libcom_googlecode_android_scripting_Exec.so..."
@@ -100,7 +100,7 @@ cp $ROOT/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so $ROOT/libs
 
 echo ''
 echo "Setting up local project configuration..."
-$ROOT/externals/android-sdk-linux/tools/android update project -p .
+android update project -p .
 
 
 echo ''
