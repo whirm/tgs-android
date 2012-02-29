@@ -1,0 +1,10 @@
+/bin
+/gen
+/externals
+/obj
+*.swp
+*~
+*.bak
+/libs/armeabi
+local.properties
+
