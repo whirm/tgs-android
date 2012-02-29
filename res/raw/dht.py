@@ -1,10 +1,34 @@
 # Released under GNU LGPL 2.1
 # See LICENSE.txt for more information
 
-import sys, os
-import socket
+#import android
+import os
 import random
+import socket
+import sys
+import time
+import threading
+import logging
 import android
+#import dht
+
+#sys.stderr = open('/sdcard/dht', 'w')
+
+
+#my_path = os.path.dirname(dht.__file__)
+#sys.path.append(my_path)
+#print >>sys.stderr, my_path
+#print >>sys.stderr, sys.path
+
+
+droid = android.Android()
+
+from pymdht import Pymdht
+from identifier import Id, RandomId
+from node import Node
+import routing_nice_rtt as routing_m_mod
+import lookup_a4 as lookup_m_mod
+import exp_plugin_template as experimental_m_mod
 
 #import ptime as time
 #import identifier
@@ -36,46 +60,60 @@ MAX_BT_PORT = 2**16
 
 
 stop_server = False
-dht = None
 
-class SwiftTraker(object):
+my_node = Node(('127.0.0.1', 7000), RandomId())
 
-    def __init__(self, dht_, port):
-        global dht
-        dht = dht_
-        self.dht = dht_
+dht = Pymdht(my_node, '/sdcard/swift/',
+             routing_m_mod,
+             lookup_m_mod,
+             experimental_m_mod,
+             None,
+             logging.DEBUG,
+             False)
+
+#droid = android.Android()
+
+
+class SwiftTraker(threading.Thread):
+
+    def __init__(self, port):
+        threading.Thread.__init__(self)
+        self.dht = dht
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind(('', port))
         self.channel_m = ChannelManager()
-    #def start(self):
+    def run(self):
         while 1:
             data, addr = self.socket.recvfrom(1024)
             self.handle(data, addr)
 
     def _on_peers_found(self, channel, peers, node):
         #current_time = time.time()
-        if not channel.open: 
-            print 'Got peers but channel is CLOSED'
-            return
-        if not peers:
-            droid.makeToast("end of lookup")  
-            print "end of lookup"
-            self.channel_m.remove(channel)
-            self.wfile.write('%d CLOSE\r\n' % (channel.send))
-            return
-        droid.makeToast('got %d peer' % len(peers))
-        print 'got %d peer' % len(peers)
+#        if not channel.open: 
+#            print 'Got peers but channel is CLOSED'
+#            return
+#        if not peers:
+#            droid.makeToast("DHT: end of lookup")  
+#            print "end of lookup"
+#            self.channel_m.remove(channel)
+#            self.wfile.write('%d CLOSE\r\n' % (channel.send))
+#            return
         new_peers = []
+        if peers is None:
+            droid.makeToast('End of lookup')
+            return
         for peer in peers:
             if peer not in channel.peers:
                 channel.peers.add(peer)
                 new_peers.append(peer)
-        for peer in new_peers:
-            msg = '%d PEER %s:%d\r\n' % (channel.send,
-                                         peer[0], peer[1])
-            self.wfile.write(msg)
-        return
+        droid.makeToast('DHT got %d peers' % len(channel.peers))
+        print 'got %d peer' % len(peers)
+#        for peer in new_peers:
+#            msg = '%d PEER %s:%d\r\n' % (channel.send,
+#                                         peer[0], peer[1])
+#            self.wfile.write(msg)
+#        return
 
     def handle(self, data , addr):
         data_len = len(data)
@@ -107,7 +145,7 @@ class SwiftTraker(object):
             elif msg_type == HASH:
                 print 'HASH',
                 i += BIN_SIZE
-                #channel.rhash = identifier.Id(data[i:i+HASH_SIZE])
+                channel.rhash = Id(data[i:i+HASH_SIZE])
                 i += HASH_SIZE
             elif msg_type == PEX_RES:
                 print 'PRES',
@@ -134,7 +172,8 @@ class SwiftTraker(object):
                 print `data`
                 raise NotImplemented
         print
-        if remote_cid == CHANNEL_ZERO:
+        if remote_cid == CHANNEL_ZERO and channel.rhash:
+            self.dht.get_peers(channel, channel.rhash, self._on_peers_found, 0)
             # need to complete handshake
             reply = ''.join((channel.remote_cid,
                              chr(HANDSHAKE),
@@ -171,6 +210,7 @@ class Channel(object):
             [chr(random.randint(0, 0xff)) for i in range(CHANNEL_SIZE)])
         self.remote_cid  = None
         self.peers = set()
+        self.rhash = None
 
         
 class ChannelManager(object):
@@ -196,5 +236,5 @@ class ChannelManager(object):
 
                 
 if __name__ == '__main__':
-    st = SwiftTraker(None, 9999).start()
+    st = SwiftTraker(9999).start()
     time.sleep(2222)
