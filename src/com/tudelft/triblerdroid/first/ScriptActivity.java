@@ -173,7 +173,7 @@ public class ScriptActivity extends Activity {
 	  	// weather-ffbase.3gp: 3GPP with 3gr? profile (gstreamer gppmux faststart=true streamable=true
 	  	public void onClick(View v) {
 	      	hash = "032476d31f185cc80eb40582fcd028b27edaeb8d"; 
-	      	tracker = "127.0.0.1:9999";
+	      	tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20021";
 	  		destination = "/sdcard/swift/weather-ffbase.3gp";
 	      	SwiftStartDownload();
 	      }
@@ -185,7 +185,7 @@ public class ScriptActivity extends Activity {
 	  	// Sintel 480p .ts rencoded to H.264 Baseline Profile
 	  	public void onClick(View v) {
 	      	hash = "109c16ac920a3358d5d9b17c9c4379b2395c44ba"; 
-	  		tracker = "127.0.0.1:9999";
+                tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20022";
 	      	SwiftStartDownload();
 	      } 
 	  	
@@ -196,7 +196,8 @@ public class ScriptActivity extends Activity {
 		  // Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
 		  public void onClick(View v) {
 			  hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
-			  tracker = "127.0.0.1:9999";
+			  tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20024";
+
 			  destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
 			  SwiftStartDownload();
 		  } 	

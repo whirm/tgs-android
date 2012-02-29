@@ -173,6 +173,7 @@ class SwiftTraker(threading.Thread):
                 raise NotImplemented
         print
         if remote_cid == CHANNEL_ZERO and channel.rhash:
+            droid.makeToast("DHT: got HANDSHAKE from swift")  
             self.dht.get_peers(channel, channel.rhash, self._on_peers_found, 0)
             # need to complete handshake
             reply = ''.join((channel.remote_cid,
@@ -180,15 +181,16 @@ class SwiftTraker(threading.Thread):
                              channel.local_cid,
                              ))
             self.socket.sendto(reply, addr)
-            time.sleep(.1) #mock DHT lookup
             reply = ''.join((channel.remote_cid,
                              chr(PEX_RES),
                              socket.inet_aton('130.161.211.194'),
                              chr(20021>>8),
                              chr(20021%256),
+                             chr(PEX_RES),
                              socket.inet_aton('130.161.211.194'),
                              chr(20022>>8),
                              chr(20022%256),
+                             chr(PEX_RES),
                              socket.inet_aton('130.161.211.194'),
                              chr(20024>>8),
                              chr(20024%256),

@@ -1,7 +1,9 @@
 # Copyright (C) 2009-2010 Raul Jimenez
 # Released under GNU LGPL 2.1
 # See LICENSE.txt for more information
-
+import sys
+sys.stderr = open('/sdcard/dht.err', 'w')
+sys.stdout = open('/sdcard/dht.out', 'w')
 import cStringIO
 import logging
 

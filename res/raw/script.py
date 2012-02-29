@@ -1,3 +1,7 @@
+import sys
+sys.stderr = open('/sdcard/dht.err', 'w')
+sys.stdout = open('/sdcard/dht.out', 'w')
+
 import android,time
 import dht
 
