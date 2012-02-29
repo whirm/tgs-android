@@ -28,8 +28,8 @@ import node
 logger = logging.getLogger('dht')
 
 
-BOOTSTRAP_MAIN_FILENAME = 'bootstrap.main'
-BOOTSTRAP_BACKUP_FILENAME = 'bootstrap.backup'
+BOOTSTRAP_MAIN_FILENAME = 'bootstrap_main'
+BOOTSTRAP_BACKUP_FILENAME = 'bootstrap_backup'
 
 MIN_RNODES_BOOTSTRAP = 10
 
