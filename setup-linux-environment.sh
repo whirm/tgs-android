@@ -86,21 +86,21 @@ if [ ! -e android-scripting ]; then
     hg clone https://code.google.com/p/android-scripting
 fi
 
-cd $ROOT
+#cd $ROOT
 
-export PATH=$PATH:$PWD/externals/android-ndk-r7b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86/bin:$PWD/externals/android-scripting/tools/agcc
+#export PATH=$PATH:$PWD/externals/android-ndk-r7b:$PWD/externals/android-scripting/tools/agcc
 echo ''
 echo "Building JNI"
-ndk-build -C jni
+$ROOT/externals/android-ndk-r7b/ndk-build -C $ROOT/jni
 
 echo ''
 echo "Copying libcom_googlecode_android_scripting_Exec.so..."
-cp hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so libs/armeabi/libcom_googlecode_android_scripting_Exec.so
+cp $ROOT/hack/lib/armeabi/libcom_googlecode_android_scripting_Exec.so $ROOT/libs/armeabi/libcom_googlecode_android_scripting_Exec.so
 
 
 echo ''
 echo "Setting up local project configuration..."
-android update project -p .
+$ROOT/externals/android-sdk-linux/tools/android update project -p .
 
 
 echo ''
