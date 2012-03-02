@@ -81,7 +81,12 @@ class SwiftTraker(threading.Thread):
         self.dht = dht
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.socket.bind(('', port))
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            self.socket.bind(('', port))
+        except (socket.error):
+            droid.MakeToast('EXCEP: port in use')
+            raise
         self.channel_m = ChannelManager()
     def run(self):
         while 1:
