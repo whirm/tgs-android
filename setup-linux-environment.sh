@@ -5,8 +5,12 @@ set -e
 
 ROOT=$PWD
 
-SDK_FILE=android-sdk_r16-linux.tgz
-NDK_FILE=android-ndk-r7b-linux-x86.tar.bz2
+SDK_VERSION=16
+#NDK_VERSION=7b
+NDK_VERSION=6
+
+SDK_FILE="android-sdk_r$SDK_VERSION-linux.tgz"
+NDK_FILE="android-ndk-r$NDK_VERSION-linux-x86.tar.bz2"
 
 get_package_index(){
     echo "$SDKS_BUFFER" | grep "$1" | awk '{ print substr($1, 0, length($1)-1)}' 
@@ -87,7 +91,7 @@ cd $ROOT/externals
 
 cd $ROOT
 
-export PATH=$PATH:$PWD/externals/android-ndk-r7b:$PWD/externals/android-sdk-linux/tools:$PWD/externals/android-sdk-linux/platform-tools:$PWD/externals/android-scripting/tools/agcc
+export PATH=$PATH:$PWD/externals/android-ndk-r$NDK_VERSION:$PWD/externals/android-sdk-linux/tools:$PWD/externals/android-sdk-linux/platform-tools:$PWD/externals/android-scripting/tools/agcc
 
 echo ''
 echo "Building JNI"
