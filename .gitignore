@@ -7,4 +7,6 @@
 *.bak
 /libs/armeabi
 local.properties
+*.pyc
+*.pyo
 
