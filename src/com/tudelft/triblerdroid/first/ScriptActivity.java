@@ -87,6 +87,12 @@ public class ScriptActivity extends PythonInstallIntegration {
 		  setInstalled(true);
 	  else
 		  setInstalled(false);
+	  
+	  hash = "032476d31f185cc80eb40582fcd028b27edaeb8d"; 
+	  tracker = "tracker3.p2p-next.org:20021";
+	  destination = "/sdcard/swift/weather-ffbase.3gp";
+	  SwiftStartDownload();
+	  
   }
 	
 
