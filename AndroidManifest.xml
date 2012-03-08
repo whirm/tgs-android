@@ -13,8 +13,7 @@
             android:name=".VideoInfoActivity"
             android:configChanges="keyboardHidden|orientation" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+				<action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,13 +22,16 @@
             android:configChanges="keyboardHidden|orientation"
             android:theme="@android:style/Theme.DeviceDefault.Light" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <action android:name="com.googlecode.android_scripting.action.ACTION_LAUNCH_FOR_RESULT" />
+                <category android:name="android.intent.category.DEFAULT" />
+		    </intent-filter>
         </activity>
         
         <service android:name="com.tudelft.triblerdroid.first.ScriptService" />
+
+        <provider
+            android:authorities="com.tudelft.triblerdroid.first.pythonprovider"
+            android:name=".PythonProvider" />
 
         <activity
             android:name="com.googlecode.android_scripting.activity.FutureActivity"

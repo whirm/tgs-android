@@ -110,10 +110,30 @@ public class ScriptService extends ForegroundService {
 	private void doOnStart(Intent intent, final int startId) {
 		super.onStart(intent, startId);
 		String fileName = Script.getFileName(this);
-		Interpreter interpreter = mInterpreterConfiguration
+		
+		Log.w("Arno: Looking for interpreter for script " + fileName );
+		
+		Interpreter interpreter = null;
+		for (int i=0; i<10; i++) {
+			// Arno, 2012-03-06: Sometimes the interpreter detection stuff
+			// doesn't appear to be ready when this is called. Calling it
+			// multiple times seems to help?
+			
+			interpreter = mInterpreterConfiguration
 				.getInterpreterForScript(fileName);
+		
+			/* if (interpreter == null)
+				Log.w("Arno: Interpreter not found ");
+			else
+				Log.w("Arno: Found interpreter, installed is " + interpreter.isInstalled() ); */
+		}
+		
 		if (interpreter == null || !interpreter.isInstalled()) {
-			mLatch.countDown();
+			return;
+			
+			// Arno, 2012-03-05: Doesn't show "Install Python 2.6.2 Yes/No dialog
+			// we now download ourselves.
+			/* mLatch.countDown();
 			if (FeaturedInterpreters.isSupported(fileName)) {
 				Intent i = new Intent(this, DialogActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -125,7 +145,7 @@ public class ScriptService extends ForegroundService {
 								+ fileName);
 			}
 			stopSelf(startId);
-			return;
+			return; */
 		}
 
 		// Copies script to internal memory.

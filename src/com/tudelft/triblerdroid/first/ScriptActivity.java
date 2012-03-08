@@ -54,7 +54,7 @@ import java.io.File;
 /**
  * @author Alexey Reznichenko (alexey.reznichenko@gmail.com)
  */
-public class ScriptActivity extends Activity {
+public class ScriptActivity extends PythonInstallIntegration {
 
 	/*
 	 * Arno: From Riccardo's original SwiftBeta
@@ -67,7 +67,6 @@ public class ScriptActivity extends Activity {
 	protected Button _b1;
 	protected Button _b2;
 	protected Button _b3;
-	protected Button _b4;
     protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
@@ -80,28 +79,29 @@ public class ScriptActivity extends Activity {
 	
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-	
 	  super.onCreate(savedInstanceState);
 	  
-	  // Arno, 2012-02-16: See if required .apks are installed
-	  /*PackageManager pm = this.getPackageManager();
-	  try
-	  {
-		  ApplicationInfo appinfo = pm.getApplicationInfo("com.googlecode.pythonforandroid", 0);
-		  Log.w("TriblerDroid","Found Python4Android");
-	  }
-	  catch( PackageManager.NameNotFoundException e)
-	  {
-		  e.printStackTrace();
-		  
-		  Intent intent = new Intent(Intent.ACTION_VIEW);
-		  intent.setData(Uri.parse("market://details?id=com.googlecode.pythonforandroid"));
-		  startActivity(intent);
-	  }*/
-    
+	  // ARNO TEST
+	  File pythonBin = new File("/data/data/"+getClass().getPackage().getName()+"/files/python/bin/python");
+	  if (pythonBin.exists() && pythonBin.canExecute())
+		  setInstalled(true);
+	  else
+		  setInstalled(false);
+  }
+	
+
+  @Override
+  protected void prepareUninstallButton() {
+	  
+	/* Arno, 2012-03-05: Moved from onCreate, such that we only launch the
+	 * service when Python is installed.
+	 */
+	Log.w("QMediaPython","prepareUninstallButton");
     if (Constants.ACTION_LAUNCH_SCRIPT_FOR_RESULT.equals(getIntent().getAction())) {
-      setTheme(android.R.style.Theme_Dialog);
-      setContentView(R.layout.dialog);
+    	
+      // Arno: layout moved up
+      //setTheme(android.R.style.Theme_Dialog);
+      //setContentView(R.layout.dialog);
       ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -124,10 +124,6 @@ public class ScriptActivity extends Activity {
       startService(new Intent(this, ScriptService.class));
     } else {
     	
-      // Arno, 2012-02-15: Need to figure out these Intents/launch modes,
-      // for now, hack an Activity with the Python running as a ForegroundService
-      setTheme(android.R.style.Theme_Light);
-      setContentView(R.layout.main);
     	
       ScriptApplication application = (ScriptApplication) getApplication();
       if (application.readyToStart()) {
@@ -135,15 +131,14 @@ public class ScriptActivity extends Activity {
       }
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
-      
-      try
-      {
-    	  SwiftInitalize();
-      }
-      catch(Exception e)
-      {
-    	  e.printStackTrace();
-      }
+    }
+    try
+    {
+  	  SwiftInitalize();
+    }
+    catch(Exception e)
+    {
+  	  e.printStackTrace();
     }
   }
 
@@ -163,8 +158,7 @@ public class ScriptActivity extends Activity {
 	  _b1 = (Button) findViewById(R.id.b1);
 	  _b2 = (Button) findViewById(R.id.b2);
 	  _b3 = (Button) findViewById(R.id.b3);
-	  _b4 = (Button) findViewById(R.id.b4);
-		
+	
 	  destination = "/sdcard/swift/dummy.ts";	
 	
 	  
@@ -173,7 +167,7 @@ public class ScriptActivity extends Activity {
 	  	// weather-ffbase.3gp: 3GPP with 3gr? profile (gstreamer gppmux faststart=true streamable=true
 	  	public void onClick(View v) {
 	      	hash = "032476d31f185cc80eb40582fcd028b27edaeb8d"; 
-	      	tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20021";
+	  		tracker = "tracker3.p2p-next.org:20021";
 	  		destination = "/sdcard/swift/weather-ffbase.3gp";
 	      	SwiftStartDownload();
 	      }
@@ -185,34 +179,22 @@ public class ScriptActivity extends Activity {
 	  	// Sintel 480p .ts rencoded to H.264 Baseline Profile
 	  	public void onClick(View v) {
 	      	hash = "109c16ac920a3358d5d9b17c9c4379b2395c44ba"; 
-                tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20022";
+	  		tracker = "tracker3.p2p-next.org:20022";
 	      	SwiftStartDownload();
 	      } 
 	  	
-	  });
+	    });
 	  
 	  _b3.setOnClickListener(new OnClickListener() {
-			
-		  // Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
-		  public void onClick(View v) {
-			  hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
-			  tracker = "127.0.0.1:9999";//"tracker3.p2p-next.org:20024";
-
-			  destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
-			  SwiftStartDownload();
-		  } 	
-	  });
-	  
-	  _b4.setOnClickListener(new OnClickListener() {
-		  
-		  // DHT test (popular BT infohash)
-		  public void onClick(View v) {
-			  hash = "86b39fe625a65a3845c4b215a8624b2ec7f30329"; 
-			  tracker = "127.0.0.1:9999";
-			  //destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
-			  SwiftStartDownload();
-		  } 
-	  });
+	
+	  	// Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
+	      public void onClick(View v) {
+	      	hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
+	  		tracker = "tracker3.p2p-next.org:20024";
+	  		destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
+	      	SwiftStartDownload();
+	      } 
+	    });
 	  _text = ( TextView ) findViewById( R.id.text );
 	  
 	}
@@ -319,11 +301,11 @@ public class ScriptActivity extends Activity {
 				if (!inmainloop) 
 				{
 					inmainloop = true;
-					Log.w("Swift","Entering libevent2 mainloop");
+					Log.w("QMediaSwift","Entering libevent2 mainloop");
 					
 					int progr = nativelib.progress();
 					
-					Log.w("Swift","LEFT MAINLOOP!");
+					Log.w("QMediaSwift","LEFT MAINLOOP!");
     			}
     		}
         	catch (Exception e ) 
