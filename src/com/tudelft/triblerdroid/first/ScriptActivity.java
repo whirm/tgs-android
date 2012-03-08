@@ -64,10 +64,7 @@ public class ScriptActivity extends PythonInstallIntegration {
     protected SwiftMainThread _swiftMainThread;
     protected StatsTask _statsTask;
 	private VideoView mVideoView = null;
-	protected Button _b1;
-	protected Button _b2;
-	protected Button _b3;
-    protected ProgressDialog _dialog;
+	protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
     String hash; 
@@ -160,47 +157,10 @@ public class ScriptActivity extends PythonInstallIntegration {
 	  File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
 	  mySwiftFolder.mkdir();
 	  
-	  // Setup the UI
-	  _b1 = (Button) findViewById(R.id.b1);
-	  _b2 = (Button) findViewById(R.id.b2);
-	  _b3 = (Button) findViewById(R.id.b3);
+	  // Raul, 2012-03--08 GUI is out, this activity only shows a full-screen video player
 	
 	  destination = "/sdcard/swift/dummy.ts";	
 	
-	  
-	  _b1.setOnClickListener(new OnClickListener() {
-	
-	  	// weather-ffbase.3gp: 3GPP with 3gr? profile (gstreamer gppmux faststart=true streamable=true
-	  	public void onClick(View v) {
-	      	hash = "032476d31f185cc80eb40582fcd028b27edaeb8d"; 
-	  		tracker = "tracker3.p2p-next.org:20021";
-	  		destination = "/sdcard/swift/weather-ffbase.3gp";
-	      	SwiftStartDownload();
-	      }
-	  	
-	    });
-	  
-	  _b2.setOnClickListener(new OnClickListener() {
-	
-	  	// Sintel 480p .ts rencoded to H.264 Baseline Profile
-	  	public void onClick(View v) {
-	      	hash = "109c16ac920a3358d5d9b17c9c4379b2395c44ba"; 
-	  		tracker = "tracker3.p2p-next.org:20022";
-	      	SwiftStartDownload();
-	      } 
-	  	
-	    });
-	  
-	  _b3.setOnClickListener(new OnClickListener() {
-	
-	  	// Pioneer.One S01E06 15min clip reencoded to H.264 Baseline MPEGTS
-	      public void onClick(View v) {
-	      	hash = "280244b5e0f22b167f96c08605ee879b0274ce22"; 
-	  		tracker = "tracker3.p2p-next.org:20024";
-	  		destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";
-	      	SwiftStartDownload();
-	      } 
-	    });
 	  _text = ( TextView ) findViewById( R.id.text );
 	  
 	}
