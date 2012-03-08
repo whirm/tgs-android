@@ -87,8 +87,9 @@ public class PythonInstallIntegration extends Main {
 		  Log.w("QMediaPython","initializeViews");
 	      // Arno, 2012-02-15: Need to figure out these Intents/launch modes,
 	      // for now, hack an Activity with the Python running as a ForegroundService
-	      setTheme(android.R.style.Theme_Light);
-	      setContentView(R.layout.main);
+	      //Raul, 2012-03-08: Intro layout
+//		  setTheme(android.R.style.Theme_Light);
+	      setContentView(R.layout.intro);
 		  
 	  }	  
 }
