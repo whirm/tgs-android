@@ -16,16 +16,13 @@
 
 package com.tudelft.triblerdroid.first;
 
-import android.app.Activity;
-
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -34,17 +31,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import android.content.pm.*;
-
-import com.tudelft.triblerdroid.first.R;
 import com.googlecode.android_scripting.Constants;
 import com.googlecode.android_scripting.facade.ActivityResultFacade;
 import com.googlecode.android_scripting.jsonrpc.RpcReceiverManager;
@@ -60,7 +50,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 	 * Arno: From Riccardo's original SwiftBeta
 	 */
 	NativeLib nativelib = null;
-	protected TextView _text;
+//	protected TextView _text;
     protected SwiftMainThread _swiftMainThread;
     protected StatsTask _statsTask;
 	private VideoView mVideoView = null;
@@ -78,6 +68,11 @@ public class ScriptActivity extends PythonInstallIntegration {
   protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  
+	  Bundle extras = getIntent().getExtras();
+      hash = extras.getString("hash");
+      tracker = extras.getString("tracker");
+      destination = extras.getString("destination");
+	  
 	  // ARNO TEST
 	  File pythonBin = new File("/data/data/"+getClass().getPackage().getName()+"/files/python/bin/python");
 	  if (pythonBin.exists() && pythonBin.canExecute())
@@ -85,9 +80,6 @@ public class ScriptActivity extends PythonInstallIntegration {
 	  else
 		  setInstalled(false);
 	  
-	  hash = "032476d31f185cc80eb40582fcd028b27edaeb8d"; 
-	  tracker = "tracker3.p2p-next.org:20021";
-	  destination = "/sdcard/swift/weather-ffbase.3gp";
 	  SwiftStartDownload();
 	  
   }
@@ -161,7 +153,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 	
 	  destination = "/sdcard/swift/dummy.ts";	
 	
-	  _text = ( TextView ) findViewById( R.id.text );
+//	  _text = ( TextView ) findViewById( R.id.text );
 	  
 	}
 	
@@ -169,7 +161,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 	//starts the download thread
 	protected void SwiftStartDownload() {
 		if (hash == null || destination == null || tracker == null) {
-			_text.setText("Swarm params are incorrect!!");
+//			_text.setText("Swarm params are incorrect!!");
 		}
 		else {
 			// Start the background process
@@ -197,7 +189,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 			
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				_text.setText("TODO HTTPGW engine stopped!");
+//				_text.setText("TODO HTTPGW engine stopped!");
 				// Arno, 2012-01-30: TODO tell HTTPGW to stop serving data
 				//nativelib.stop();
 			}
@@ -220,7 +212,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 			runOnUiThread(new Runnable(){
 				public void run() {
 					getWindow().setFormat(PixelFormat.TRANSLUCENT);
-					_text.setText("Play " + destination);
+//					_text.setText("Play " + destination);
 		    		mVideoView = (VideoView) findViewById(R.id.surface_view);
 	
 		    		// Arno, 2012-01-30: Download *and* play, using HTTPGW
@@ -233,7 +225,7 @@ public class ScriptActivity extends PythonInstallIntegration {
 		    		mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 						@Override
 						public void onPrepared (MediaPlayer mp) {
-							_text.setText("Player75 prepared!");
+//							_text.setText("Player75 prepared!");
 							_dialog.dismiss();
 						}
 					});

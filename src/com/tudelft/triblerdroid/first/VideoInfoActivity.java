@@ -16,6 +16,9 @@ public class VideoInfoActivity extends Activity {
  	String title = "TT";
 	String description = "DD";
 	String url;
+	String hash;
+	String tracker;
+	String destination;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -32,16 +35,26 @@ public class VideoInfoActivity extends Activity {
     			title =  (String) getResources().getText(R.string.v1_title);
     			description =  (String) getResources().getText(R.string.v1_description);
     			url =  (String) getResources().getText(R.string.v1_url);
+    			hash =  (String) getResources().getText(R.string.v1_hash);
+    			tracker =  (String) getResources().getText(R.string.v1_tracker);
+    			destination =  (String) getResources().getText(R.string.v1_destination);
+    			
         		break;
     		case 1:
     			title =  (String) getResources().getText(R.string.v2_title);
     			description =  (String) getResources().getText(R.string.v2_description);
     			url =  (String) getResources().getText(R.string.v2_url);
+    			hash =  (String) getResources().getText(R.string.v2_hash);
+    			tracker =  (String) getResources().getText(R.string.v2_tracker);
+    			destination =  (String) getResources().getText(R.string.v2_destination);
     			break;
     		case 2:
     			title =  (String) getResources().getText(R.string.v3_title);
     			description =  (String) getResources().getText(R.string.v3_description);
     			url =  (String) getResources().getText(R.string.v3_url);
+    			hash =  (String) getResources().getText(R.string.v3_hash);
+    			tracker =  (String) getResources().getText(R.string.v3_tracker);
+    			destination =  (String) getResources().getText(R.string.v3_destination);
     			break;
     	}
     	
@@ -59,6 +72,9 @@ public class VideoInfoActivity extends Activity {
 //    	    	intent.putExtra("video_pos", pos);
       	    	//FIXME
       	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
+    	    	intent.putExtra("hash", hash);
+    	    	intent.putExtra("tracker", tracker);
+    	    	intent.putExtra("destination", destination);
       	    	startActivity(intent);
       	    }
       	});
