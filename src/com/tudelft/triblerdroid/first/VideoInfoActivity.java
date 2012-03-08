@@ -26,8 +26,8 @@ public class VideoInfoActivity extends Activity {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.video_info);
     	
-    	//Bundle extras = getIntent().getExtras();
-    	final Integer pos = 0;//extras.getInt("video_pos", 0);
+    	Bundle extras = getIntent().getExtras();
+    	final Integer pos = extras.getInt("video_pos", 0);
     	
     	
     	switch (pos) {
