@@ -68,10 +68,10 @@ public class ScriptActivity extends PythonInstallIntegration {
   protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  
-	  Bundle extras = getIntent().getExtras();
-      hash = extras.getString("hash");
-      tracker = extras.getString("tracker");
-      destination = extras.getString("destination");
+	  //Bundle extras = getIntent().getExtras();
+      hash = "280244b5e0f22b167f96c08605ee879b0274ce22";//extras.getString("hash");
+      tracker = "tracker3.p2p-next.org:20024";//extras.getString("tracker");
+      destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";//extras.getString("destination");
 	  
 	  // ARNO TEST
 	  File pythonBin = new File("/data/data/"+getClass().getPackage().getName()+"/files/python/bin/python");

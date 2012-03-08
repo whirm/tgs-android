@@ -88,8 +88,8 @@ public class PythonInstallIntegration extends Main {
 	      // Arno, 2012-02-15: Need to figure out these Intents/launch modes,
 	      // for now, hack an Activity with the Python running as a ForegroundService
 	      //Raul, 2012-03-08: Intro layout
-//		  setTheme(android.R.style.Theme_Light);
-	      setContentView(R.layout.intro);
+		  setTheme(android.R.style.Theme_Light);
+	      setContentView(R.layout.main);
 		  
 	  }	  
 }
