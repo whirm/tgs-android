@@ -19,13 +19,8 @@ package com.tudelft.triblerdroid.first;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.PixelFormat;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,9 +29,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.googlecode.android_scripting.Constants;
@@ -94,14 +86,15 @@ public class IntroActivity extends PythonInstallIntegration {
 	  
 //	  Raul, 2012-03-08: This is done in PythonInstallIntegration
 //	  setContentView(R.layout.video_info);
-
 	  b_continue = (Button) findViewById(R.id.b_continue);
+//	  b_continue.setVisibility(View.INVISIBLE);
 	  b_continue.setOnClickListener(new OnClickListener() {
 		  public void onClick(View v) {
 			  Intent intent = new Intent(getBaseContext(), VodoEitActivity.class);
 			  startActivity(intent);
 		  }  	
 	  });
+
   }
 	
 
@@ -147,6 +140,10 @@ public class IntroActivity extends PythonInstallIntegration {
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
     }
+//    Raul, 2012-03-09: This doesn't get executed. Why?
+    // instalation done, make button visible
+    b_continue = (Button) findViewById(R.id.b_continue);
+    b_continue.setVisibility(View.VISIBLE);
   }
 
 	
