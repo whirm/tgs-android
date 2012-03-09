@@ -119,18 +119,13 @@ public class ScriptActivity extends Activity {
   
 	//starts the download thread
 	protected void SwiftStartDownload() {
-		if (hash == null || destination == null || tracker == null) {
-//			_text.setText("Swarm params are incorrect!!");
-		}
-		else {
-			// Start the background process
-	      _swiftMainThread = new SwiftMainThread();
-	      _swiftMainThread.start();    	
-	      // start the progress bar
-	      SwiftCreateProgress();
-	      _statsTask = new StatsTask();
-	      _statsTask.execute( hash, tracker, destination );
-		}
+		// Start the background process
+		_swiftMainThread = new SwiftMainThread();
+		_swiftMainThread.start();    	
+		// start the progress bar
+		SwiftCreateProgress();
+		_statsTask = new StatsTask();
+		_statsTask.execute( hash, tracker, destination );
 	}
 	
 	// creates the progress dialog
