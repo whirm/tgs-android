@@ -97,6 +97,11 @@ public class ScriptActivity extends Activity {
       {
     	  e.printStackTrace();
       }
+	  Bundle extras = getIntent().getExtras();
+	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
+	  tracker = "127.0.0.1:9999";//extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  destination = extras.getString("destination");//"/sdcard/swift/p1-s1e6-clip2-base.ts"
+	  SwiftStartDownload();
   }
 
   /*
@@ -109,13 +114,7 @@ public class ScriptActivity extends Activity {
 	  String swiftFolder = "/swift";
 	  String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
 	  File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
-	  mySwiftFolder.mkdir();
-	  
-	  Bundle extras = getIntent().getExtras();
-	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
-	  tracker = "127.0.0.1:9999";//extras.getString("tracker");//"tracker3.p2p-next.org:20024"
-	  destination = extras.getString("destination");//"/sdcard/swift/p1-s1e6-clip2-base.ts"
-	  SwiftStartDownload();
+	  mySwiftFolder.mkdir();	  
   }
   
 	//starts the download thread
