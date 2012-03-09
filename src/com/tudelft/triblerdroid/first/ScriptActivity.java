@@ -16,13 +16,16 @@
 
 package com.tudelft.triblerdroid.first;
 
+import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -31,10 +34,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import android.content.pm.*;
+
+import com.tudelft.triblerdroid.first.R;
 import com.googlecode.android_scripting.Constants;
 import com.googlecode.android_scripting.facade.ActivityResultFacade;
 import com.googlecode.android_scripting.jsonrpc.RpcReceiverManager;
@@ -44,7 +54,7 @@ import java.io.File;
 /**
  * @author Alexey Reznichenko (alexey.reznichenko@gmail.com)
  */
-public class ScriptActivity extends PythonInstallIntegration {
+public class ScriptActivity extends Activity {
 
 	/*
 	 * Arno: From Riccardo's original SwiftBeta
@@ -54,7 +64,11 @@ public class ScriptActivity extends PythonInstallIntegration {
     protected SwiftMainThread _swiftMainThread;
     protected StatsTask _statsTask;
 	private VideoView mVideoView = null;
-	protected ProgressDialog _dialog;
+	protected Button _b1;
+	protected Button _b2;
+	protected Button _b3;
+	protected Button _b4;
+    protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
     String hash; 
@@ -66,59 +80,10 @@ public class ScriptActivity extends PythonInstallIntegration {
 	
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-	  super.onCreate(savedInstanceState);
-	  
-	  //Bundle extras = getIntent().getExtras();
-      hash = "280244b5e0f22b167f96c08605ee879b0274ce22";//extras.getString("hash");
-      tracker = "tracker3.p2p-next.org:20024";//extras.getString("tracker");
-      destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";//extras.getString("destination");
-	  
-	  // ARNO TEST
-	  File pythonBin = new File("/data/data/"+getClass().getPackage().getName()+"/files/python/bin/python");
-	  if (pythonBin.exists() && pythonBin.canExecute())
-		  setInstalled(true);
-	  else
-		  setInstalled(false);
-	  
-	  SwiftStartDownload();
-	  
-  }
 	
-
-  @Override
-  protected void prepareUninstallButton() {
-	  
-	/* Arno, 2012-03-05: Moved from onCreate, such that we only launch the
-	 * service when Python is installed.
-	 */
-	Log.w("QMediaPython","prepareUninstallButton");
-    if (Constants.ACTION_LAUNCH_SCRIPT_FOR_RESULT.equals(getIntent().getAction())) {
-    	
-      // Arno: layout moved up
-      //setTheme(android.R.style.Theme_Dialog);
-      //setContentView(R.layout.dialog);
-      ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-          ScriptService scriptService = ((ScriptService.LocalBinder) service).getService();
-          try {
-            RpcReceiverManager manager = scriptService.getRpcReceiverManager();
-            ActivityResultFacade resultFacade = manager.getReceiver(ActivityResultFacade.class);
-            resultFacade.setActivity(ScriptActivity.this);
-          } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-          // Ignore.
-        }
-      };
-      bindService(new Intent(this, ScriptService.class), connection, Context.BIND_AUTO_CREATE);
-      startService(new Intent(this, ScriptService.class));
-    } else {
-    	
+	  super.onCreate(savedInstanceState);
+      setTheme(android.R.style.Theme_Light);
+      setContentView(R.layout.main);
     	
       ScriptApplication application = (ScriptApplication) getApplication();
       if (application.readyToStart()) {
@@ -126,15 +91,15 @@ public class ScriptActivity extends PythonInstallIntegration {
       }
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
-    }
-    try
-    {
-  	  SwiftInitalize();
-    }
-    catch(Exception e)
-    {
-  	  e.printStackTrace();
-    }
+      
+      try
+      {
+    	  SwiftInitalize();
+      }
+      catch(Exception e)
+      {
+    	  e.printStackTrace();
+      }
   }
 
   /*
@@ -148,14 +113,15 @@ public class ScriptActivity extends PythonInstallIntegration {
 	  String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
 	  File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
 	  mySwiftFolder.mkdir();
-	  
-	  // Raul, 2012-03--08 GUI is out, this activity only shows a full-screen video player
-	
+
 	  destination = "/sdcard/swift/dummy.ts";	
-	
-//	  _text = ( TextView ) findViewById( R.id.text );
 	  
-	}
+	  //Bundle extras = getIntent().getExtras();
+	  hash = "280244b5e0f22b167f96c08605ee879b0274ce22";//extras.getString("hash");
+	  tracker = "tracker3.p2p-next.org:20024";//extras.getString("tracker");
+	  destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";//extras.getString("destination");
+	  SwiftStartDownload();
+  }
 	
   
 	//starts the download thread
@@ -259,11 +225,11 @@ public class ScriptActivity extends PythonInstallIntegration {
 				if (!inmainloop) 
 				{
 					inmainloop = true;
-					Log.w("QMediaSwift","Entering libevent2 mainloop");
+					Log.w("Swift","Entering libevent2 mainloop");
 					
 					int progr = nativelib.progress();
 					
-					Log.w("QMediaSwift","LEFT MAINLOOP!");
+					Log.w("Swift","LEFT MAINLOOP!");
     			}
     		}
         	catch (Exception e ) 
