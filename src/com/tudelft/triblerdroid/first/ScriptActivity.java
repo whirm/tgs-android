@@ -64,10 +64,6 @@ public class ScriptActivity extends Activity {
     protected SwiftMainThread _swiftMainThread;
     protected StatsTask _statsTask;
 	private VideoView mVideoView = null;
-	protected Button _b1;
-	protected Button _b2;
-	protected Button _b3;
-	protected Button _b4;
     protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
@@ -84,11 +80,12 @@ public class ScriptActivity extends Activity {
 	  super.onCreate(savedInstanceState);
       setTheme(android.R.style.Theme_Light);
       setContentView(R.layout.main);
-    	
-      ScriptApplication application = (ScriptApplication) getApplication();
-      if (application.readyToStart()) {
-        startService(new Intent(this, ScriptService.class));
-      }
+
+////      Raul, 2012-03-09: initialized in IntroActivity
+//      ScriptApplication application = (ScriptApplication) getApplication();
+//      if (application.readyToStart()) {
+//        startService(new Intent(this, ScriptService.class));
+//      }
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
       
@@ -116,11 +113,10 @@ public class ScriptActivity extends Activity {
 	  
 	  Bundle extras = getIntent().getExtras();
 	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
-	  tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  tracker = "127.0.0.1:9999";//extras.getString("tracker");//"tracker3.p2p-next.org:20024"
 	  destination = extras.getString("destination");//"/sdcard/swift/p1-s1e6-clip2-base.ts"
 	  SwiftStartDownload();
   }
-	
   
 	//starts the download thread
 	protected void SwiftStartDownload() {
