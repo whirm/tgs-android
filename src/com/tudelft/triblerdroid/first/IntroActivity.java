@@ -61,9 +61,6 @@ public class IntroActivity extends PythonInstallIntegration {
 	protected ProgressDialog _dialog;
     protected Integer _seqCompInt;
 
-    String hash; 
-	String tracker;
-	String destination;
 	boolean inmainloop = false;
 	
 	Button b_continue;
@@ -71,6 +68,20 @@ public class IntroActivity extends PythonInstallIntegration {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
+
+//	  Raul, 2012-03-09: moved here because pymdht creates files in this directory
+	    try
+	    {
+	  	  // create dir for swift
+	    	String swiftFolder = "/swift";
+	    	String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+	    	File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
+	    	mySwiftFolder.mkdir();
+	    }
+	    catch(Exception e)
+	    {
+	  	  e.printStackTrace();
+	    }
 
 	  // ARNO TEST
 	  File pythonBin = new File("/data/data/"+getClass().getPackage().getName()+"/files/python/bin/python");
@@ -81,7 +92,7 @@ public class IntroActivity extends PythonInstallIntegration {
 	  
 	  //SwiftStartDownload();
 	  
-//	  Raul, 2012-03-08: This is doe in PythonInstallIntegration
+//	  Raul, 2012-03-08: This is done in PythonInstallIntegration
 //	  setContentView(R.layout.video_info);
 
 	  b_continue = (Button) findViewById(R.id.b_continue);
@@ -136,36 +147,8 @@ public class IntroActivity extends PythonInstallIntegration {
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
     }
-    try
-    {
-//    	Raul, 2012-03-08: dont initialize just now, do it in ScriptActivity
-//    	SwiftInitalize();
-    }
-    catch(Exception e)
-    {
-  	  e.printStackTrace();
-    }
   }
 
-  /*
-   *  Arno: From Riccardo's original SwiftBeta
-   */
-  
-  protected void SwiftInitalize()
-  {
-	  // create dir for swift
-	  String swiftFolder = "/swift";
-	  String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-	  File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
-	  mySwiftFolder.mkdir();
-	  
-	  // Raul, 2012-03--08 GUI is out, this activity only shows a full-screen video player
-	
-	  destination = "/sdcard/swift/dummy.ts";	
-	
-//	  _text = ( TextView ) findViewById( R.id.text );
-	  
-	}
 	
     
     
