@@ -79,6 +79,7 @@ class SwiftTraker(object):
     def __init__(self, port):
 #        Raul, 2012-03-09: Do not create a thread
 #        threading.Thread.__init__(self)
+        self.rand_num = random.randint(0, 999)
         self.dht = dht
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -90,12 +91,13 @@ class SwiftTraker(object):
             droid.MakeToast('EXCEP: port in use')
             raise
         self.channel_m = ChannelManager()
+        
     def start(self):#run(self):
         while 1:
             try:
                 data, addr = self.socket.recvfrom(1024)
             except (socket.timeout):
-                droid.makeToast('DHT alive')
+                droid.makeToast('DHT alive %d' % self.rand_num)
             except:
                 droid.makeToast('EXCEPTION in recvfrom')
             else:
