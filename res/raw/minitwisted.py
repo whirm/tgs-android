@@ -24,7 +24,7 @@ logger = logging.getLogger('dht')
 
 BUFFER_SIZE = 3000
 
-DEBUG = False
+DEBUG = True
                             
 class ThreadedReactor(threading.Thread):
 
