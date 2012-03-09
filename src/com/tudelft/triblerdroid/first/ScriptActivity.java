@@ -113,13 +113,11 @@ public class ScriptActivity extends Activity {
 	  String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
 	  File mySwiftFolder = new File(extStorageDirectory + swiftFolder);
 	  mySwiftFolder.mkdir();
-
-	  destination = "/sdcard/swift/dummy.ts";	
 	  
-	  //Bundle extras = getIntent().getExtras();
-	  hash = "280244b5e0f22b167f96c08605ee879b0274ce22";//extras.getString("hash");
-	  tracker = "tracker3.p2p-next.org:20024";//extras.getString("tracker");
-	  destination = "/sdcard/swift/p1-s1e6-clip2-base.ts";//extras.getString("destination");
+	  Bundle extras = getIntent().getExtras();
+	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
+	  tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  destination = extras.getString("destination");//"/sdcard/swift/p1-s1e6-clip2-base.ts"
 	  SwiftStartDownload();
   }
 	

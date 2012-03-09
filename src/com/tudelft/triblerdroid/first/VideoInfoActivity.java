@@ -67,10 +67,6 @@ public class VideoInfoActivity extends Activity {
   	  
     	b_play.setOnClickListener(new OnClickListener() {
       	    public void onClick(View view) {
-      	    	//Start video
-//      	    	Intent intent = new Intent(getBaseContext(), VideoActivity.class);
-//    	    	intent.putExtra("video_pos", pos);
-      	    	//FIXME
       	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
     	    	intent.putExtra("hash", hash);
     	    	intent.putExtra("tracker", tracker);
