@@ -10,7 +10,8 @@ droid.makeToast('Python says: Hello, Android!')
 droid.vibrate(300)
 
 dht.SwiftTraker(9999).start()
+# Raul, 2012-03-09: SwiftTracker does not create a thread!!
 droid.makeToast('SCRIPT.PY: SwiftTracker running')
-while 1:
+while 0:
     time.sleep(5)
     droid.makeToast('Why is this never shown? No real thread?')

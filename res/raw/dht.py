@@ -74,22 +74,23 @@ dht = Pymdht(my_node, '/sdcard/swift/',
 #droid = android.Android()
 
 
-class SwiftTraker(threading.Thread):
+class SwiftTraker(object):
 
     def __init__(self, port):
-        threading.Thread.__init__(self)
+#        Raul, 2012-03-09: Do not create a thread
+#        threading.Thread.__init__(self)
         self.dht = dht
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.settimeout(5) # This is to show that the thread is running
+        self.socket.settimeout(10) # This is to show that the thread is running
         try:
             self.socket.bind(('', port))
         except (socket.error):
             droid.MakeToast('EXCEP: port in use')
             raise
         self.channel_m = ChannelManager()
-    def run(self):
+    def start(self):#run(self):
         while 1:
             try:
                 data, addr = self.socket.recvfrom(1024)
