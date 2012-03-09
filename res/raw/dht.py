@@ -82,6 +82,7 @@ class SwiftTraker(threading.Thread):
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.settimeout(5) # This is to show that the thread is running
         try:
             self.socket.bind(('', port))
         except (socket.error):
@@ -90,8 +91,14 @@ class SwiftTraker(threading.Thread):
         self.channel_m = ChannelManager()
     def run(self):
         while 1:
-            data, addr = self.socket.recvfrom(1024)
-            self.handle(data, addr)
+            try:
+                data, addr = self.socket.recvfrom(1024)
+            except (socket.timeout):
+                droid.makeToast('DHT alive')
+            except:
+                droid.makeToast('EXCEPTION in recvfrom')
+            else:
+                self.handle(data, addr)
 
     def _on_peers_found(self, channel, peers, node):
         #current_time = time.time()
