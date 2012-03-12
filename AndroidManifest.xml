@@ -49,7 +49,7 @@
         <activity
             android:name="com.tudelft.triblerdroid.first.DialogActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.DeviceDefault.Light" />
+            android:theme="@android:style/Theme.Light" />
     </application>
 
     <uses-sdk android:minSdkVersion="4" />
