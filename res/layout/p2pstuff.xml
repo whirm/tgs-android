@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckBox
+        android:id="@+id/p2p_checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable P2P engine" />
+
+    <TextView
+        android:id="@+id/p2p_status_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P2P engine is currently: %s" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/p2p_data_sent_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="%s sent." />
+
+            <TextView
+                android:id="@+id/p2p_data_received_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="%s received." />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/p2p_clear_stats_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Clear stats" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Automatically reset stats every:" />
+
+    <Spinner
+        android:id="@+id/p2p_stats_autoclear_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@layout/p2pstuff" />
+
+    <TextView
+        android:id="@+id/p2p_used_space_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%s of cached data stored on SDCard." />
+
+    <TextView
+        android:id="@+id/p2p_free_space_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%s of Free space available on SDCard." />
+
+    <Button
+        android:id="@+id/p2p_clear_cache_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear all cached data now" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Automatically clear cached data older than:" />
+
+    <Spinner
+        android:id="@+id/p2p_cache_auto_expire_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
