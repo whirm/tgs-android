@@ -27,7 +27,7 @@ public class VodoEitActivity extends ListActivity {
     	  videoList.add((String) getResources().getText(R.string.v3_title));
     	  
     	  
-    	  setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, videoList));
+    	  setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, VIDEOS));
 
     	  ListView lv = getListView();
     	  lv.setTextFilterEnabled(true);
@@ -44,21 +44,59 @@ public class VodoEitActivity extends ListActivity {
 //    	    			Toast.LENGTH_SHORT).show();
 
     	    	//See video info
-    	    	Intent intent = new Intent(getBaseContext(), VideoInfoActivity.class);
-    	    	intent.putExtra("video_pos", position);
-    	    	startActivity(intent);
+//    	    	Intent intent = new Intent(getBaseContext(), VideoInfoActivity.class);
+//    	    	intent.putExtra("video_pos", position);
+//    	    	startActivity(intent);      	    	
+    	    	
+//    	    	Play video
+    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
+    	    	intent.putExtra("hash", HASHES[position]);
+    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:2002");
+//    	    	intent.putExtra("destination", destination);
+      	    	startActivity(intent);
+
 
     	    	
     	      
     	    }
     	  });
     	}
-//    static final String[] VIDEOS = new String[] {
-//       	"Video 1","Video 2","Video 3","Video 4","Video 5","Video 6","Video 7", 
-//       	"Video 1","Video 2","Video 3","Video 4","Video 5","Video 6","Video 7",
-//       	"Video 1","Video 2","Video 3","Video 4","Video 5","Video 6","Video 7",
-//       	"Video 1","Video 2","Video 3","Video 4","Video 5","Video 6","Video 7",
-//   };
+	static final String[] VIDEOS = new String[] {
+		"Ken Robinson says schools kill creativity", 
+		"Jill Bolte Taylor's stroke of insight", 
+		"Pranav Mistry: The thrilling potential of SixthSense technology", 
+		"David Gallo shows underwater astonishments", 
+		"Pattie Maes and Pranav Mistry demo SixthSense", 
+		"Simon Sinek: How great leaders inspire action", 
+		"Arthur Benjamin does 'Mathemagic'", 
+		"Hans Rosling shows the best stats you've ever seen", 
+		"Rob Reid: The $8 billion iPod", 
+		"Brené Brown: Listening to shame", 
+    	"Susan Cain: The power of introverts", 
+		"Vijay Kumar: Robots that fly ... and cooperate", 
+    	"I Think Were Alone Now", 
+		"L5 Part 1", 
+    	"Pioneer One S01E06", 
+		"An Honest Man", 
+    };
+	static final String[] HASHES = new String[] {
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+		"280244b5e0f22b167f96c08605ee879b0274ce22", 
+    };
       
 }
 
