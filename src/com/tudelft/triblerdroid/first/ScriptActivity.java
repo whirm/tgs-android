@@ -60,6 +60,7 @@ public class ScriptActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
 	
 	  super.onCreate(savedInstanceState);
+//	  Raul, 2012-03-21: No necessary because of the notitle.fullscreen in Manifest
 //      setTheme(android.R.style.Theme_Light);
 //      requestWindowFeature(Window.FEATURE_NO_TITLE);
 //      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
