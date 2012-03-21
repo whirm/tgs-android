@@ -21,10 +21,10 @@ public class VodoEitActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
     	  super.onCreate(savedInstanceState);
 
-    	  ArrayList<String> videoList = new ArrayList<String>();
-    	  videoList.add((String) getResources().getText(R.string.v1_title));
-    	  videoList.add((String) getResources().getText(R.string.v2_title));
-    	  videoList.add((String) getResources().getText(R.string.v3_title));
+//    	  ArrayList<String> videoList = new ArrayList<String>();
+//    	  videoList.add((String) getResources().getText(R.string.v1_title));
+//    	  videoList.add((String) getResources().getText(R.string.v2_title));
+//    	  videoList.add((String) getResources().getText(R.string.v3_title));
     	  
     	  
     	  setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, VIDEOS));
@@ -51,7 +51,8 @@ public class VodoEitActivity extends ListActivity {
 //    	    	Play video
     	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
     	    	intent.putExtra("hash", HASHES[position]);
-    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050");
+//    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
+    	    	intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
 //    	    	intent.putExtra("destination", destination);
       	    	startActivity(intent);
 
