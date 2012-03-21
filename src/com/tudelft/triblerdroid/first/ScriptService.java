@@ -170,6 +170,9 @@ public class ScriptService extends ForegroundService {
 			mProxy = new AndroidProxy(this, null, true);
 			mProxy.startLocal();
 			mLatch.countDown();
+//			2012-03-20, Raul: this line crashes
+//			03-20 13:25:23.815: E/sl4a.StreamGobbler:108(3875): java.io.FileNotFoundException: /mnt/sdcard/sl4a/script.py.log: open failed: ENOENT (No such file or directory)
+
 			ScriptLauncher.launchScript(script, mInterpreterConfiguration,
 					mProxy, new Runnable() {
 						@Override
