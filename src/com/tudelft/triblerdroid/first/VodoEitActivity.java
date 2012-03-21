@@ -1,7 +1,5 @@
 package com.tudelft.triblerdroid.first;
 
-import java.util.ArrayList;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,15 +45,20 @@ public class VodoEitActivity extends ListActivity {
 //    	    	Intent intent = new Intent(getBaseContext(), VideoInfoActivity.class);
 //    	    	intent.putExtra("video_pos", position);
 //    	    	startActivity(intent);      	    	
-    	    	
-//    	    	Play video
-    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
-    	    	intent.putExtra("hash", HASHES[position]);
-//    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
-    	    	intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
-//    	    	intent.putExtra("destination", destination);
-      	    	startActivity(intent);
-
+    	    	if (position != 0) {
+	//    	    	Play video
+	    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
+	    	    	intent.putExtra("hash", HASHES[position]);
+	//    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
+	    	    	intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
+	//    	    	intent.putExtra("destination", destination);
+	      	    	startActivity(intent);
+    	    	}
+    	    	else {
+    	    		stopService(new Intent(getBaseContext(), ScriptService.class));
+    	    		Toast.makeText(getApplicationContext(), "P2P Engine stopped",
+    	    				Toast.LENGTH_SHORT).show();
+    	    	}
 
     	    	
     	      
@@ -63,6 +66,7 @@ public class VodoEitActivity extends ListActivity {
     	  });
     	} // Arno: If you change the order here, change HASHES[] order as well!
 	static final String[] VIDEOS = new String[] {
+		">>> STOP P2P Engine <<<",
 		"Ken Robinson says schools kill creativity", 
 		"Jill Bolte Taylor's stroke of insight", 
 		"Pranav Mistry: The thrilling potential of SixthSense technology", 
@@ -81,6 +85,7 @@ public class VodoEitActivity extends ListActivity {
 		"An Honest Man", 
     };
 	static final String[] HASHES = new String[] {
+		"",
 		"2b2fe5f1462e5b7ac4d70fa081e0169160b2d3a6", // SirKenRobinson_2006-480p.ts
 		"a004e583a05de39f87ceb7a6eb5608c89415e2f0", // JillBolteTaylor_2008-480p.ts
 		"23f99be0f5198efceb4da15fd196106b70216e1e", // PranavMistry_2009I-480p.ts
