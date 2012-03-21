@@ -17,37 +17,19 @@
 package com.tudelft.triblerdroid.first;
 
 import android.app.Activity;
-
 import android.app.ProgressDialog;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
-import android.content.pm.*;
-
-import com.tudelft.triblerdroid.first.R;
-import com.googlecode.android_scripting.Constants;
-import com.googlecode.android_scripting.facade.ActivityResultFacade;
-import com.googlecode.android_scripting.jsonrpc.RpcReceiverManager;
 
 import java.io.File;
 
@@ -78,8 +60,12 @@ public class ScriptActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
 	
 	  super.onCreate(savedInstanceState);
-      setTheme(android.R.style.Theme_Light);
+//      setTheme(android.R.style.Theme_Light);
+//      requestWindowFeature(Window.FEATURE_NO_TITLE);
+//      getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
+//                              WindowManager.LayoutParams.FLAG_FULLSCREEN); 
       setContentView(R.layout.main);
+
 
 ////      Raul, 2012-03-09: initialized in IntroActivity
 //      ScriptApplication application = (ScriptApplication) getApplication();
@@ -99,8 +85,8 @@ public class ScriptActivity extends Activity {
       }
 	  Bundle extras = getIntent().getExtras();
 	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
-	  tracker = "127.0.0.1:9999";//extras.getString("tracker");//"tracker3.p2p-next.org:20024"
-	  destination = extras.getString("destination");//"/sdcard/swift/p1-s1e6-clip2-base.ts"
+	  tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  destination = "/sdcard/swift/video.ts";
 	  SwiftStartDownload();
   }
 
