@@ -199,7 +199,11 @@ class SwiftTraker(object):
             droid.makeToast('>>>>>>>>>>>>> GETTING PEERS <<<<<<<<<<<<<<')
             reply = ''.join((channel.remote_cid,
                              chr(PEX_RES),
-                             socket.inet_aton('130.161.211.194'),
+                             socket.inet_aton('130.161.211.194'), #Delft
+                             chr(20050>>8),
+                             chr(20050%256),
+                             chr(PEX_RES),
+                             socket.inet_aton('192.16.125.242'), #KTH
                              chr(20050>>8),
                              chr(20050%256),
                              ))
