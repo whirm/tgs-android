@@ -100,9 +100,15 @@ class ThreadedReactor(threading.Thread):
         """
         self.running = True
         logger.critical('run')
+        TOAST_EACH = 50
+        toast_countdown = TOAST_EACH
         try:
             while self.running:
-                droid.makeToast('minitwisted alive')
+                if toast_countdown:
+                    toast_countdown -= 1
+                else:
+                    toast_countdown = TOAST_EACH
+                    droid.makeToast('minitwisted alive')
                 self.run_one_step()
         except:
             logger.critical( 'MINITWISTED CRASHED')
