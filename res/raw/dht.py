@@ -46,6 +46,9 @@ HINT = 0x08
 MSGTYPE_RCVD = 0x09
 VERSION = 0x10
 
+START = 0xF0
+STOP = 0xF1
+
 CHANNEL_SIZE = 4
 BIN_SIZE = 4
 HASH_SIZE = 20
@@ -61,16 +64,6 @@ MAX_BT_PORT = 2**16
 
 stop_server = False
 
-my_node = Node(('127.0.0.1', 7000), RandomId())
-
-dht = Pymdht(my_node, '/sdcard/swift/',
-             routing_m_mod,
-             lookup_m_mod,
-             experimental_m_mod,
-             None,
-             logging.DEBUG,
-             False)
-
 #droid = android.Android()
 
 
@@ -79,12 +72,23 @@ class SwiftTraker(object):
     def __init__(self, port):
 #        Raul, 2012-03-09: Do not create a thread
 #        threading.Thread.__init__(self)
+
+
+        my_node = Node(('127.0.0.1', 7000), RandomId())
+
+        self.dht = Pymdht(my_node, '/sdcard/swift/',
+                          routing_m_mod,
+                          lookup_m_mod,
+                          experimental_m_mod,
+                          None,
+                          logging.DEBUG,
+                          False)
+
         self.rand_num = random.randint(0, 999)
-        self.dht = dht
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.settimeout(10) # This is to show that the thread is running
+        self.socket.settimeout(5) # This is to show that the thread is running
         try:
             self.socket.bind(('', port))
         except (socket.error):
@@ -93,7 +97,8 @@ class SwiftTraker(object):
         self.channel_m = ChannelManager()
         
     def start(self):#run(self):
-        while 1:
+        stop_dht = False
+        while not stop_dht:
             try:
                 data, addr = self.socket.recvfrom(1024)
             except (socket.timeout):
@@ -101,7 +106,8 @@ class SwiftTraker(object):
             except:
                 droid.makeToast('EXCEPTION in recvfrom')
             else:
-                self.handle(data, addr)
+                stop_dht = self.handle(data, addr)
+        self.dht.stop()
 
     def _on_peers_found(self, channel, peers, node):
         #current_time = time.time()
@@ -131,6 +137,8 @@ class SwiftTraker(object):
 #        return
 
     def handle(self, data , addr):
+        if data == "KILL_DHT":
+            return True # stop DHT
         data_len = len(data)
         i = 0
         print 'in: ',

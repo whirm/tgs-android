@@ -100,6 +100,7 @@ class ThreadedReactor(threading.Thread):
         logger.critical('run')
         try:
             while self.running:
+                dht.droid.makeToast('minitwisted alive')
                 self.run_one_step()
         except:
             logger.critical( 'MINITWISTED CRASHED')

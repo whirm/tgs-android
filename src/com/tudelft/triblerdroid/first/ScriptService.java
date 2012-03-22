@@ -22,12 +22,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Binder;
 import android.os.IBinder;
+import android.widget.Toast;
 
-import com.tudelft.triblerdroid.first.R;
 import com.googlecode.android_scripting.AndroidProxy;
 import com.googlecode.android_scripting.BaseApplication;
-import com.googlecode.android_scripting.Constants;
-import com.googlecode.android_scripting.FeaturedInterpreters;
 import com.googlecode.android_scripting.FileUtils;
 import com.googlecode.android_scripting.ForegroundService;
 import com.googlecode.android_scripting.Log;
@@ -43,6 +41,8 @@ import com.googlecode.android_scripting.jsonrpc.RpcReceiverManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -106,6 +106,7 @@ public class ScriptService extends ForegroundService {
 			e.printStackTrace();
 		}
 	}
+	
 		
 	private void doOnStart(Intent intent, final int startId) {
 		super.onStart(intent, startId);

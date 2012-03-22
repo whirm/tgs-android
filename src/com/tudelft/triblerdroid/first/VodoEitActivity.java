@@ -10,6 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 
 
 public class VodoEitActivity extends ListActivity {
@@ -56,8 +63,33 @@ public class VodoEitActivity extends ListActivity {
     	    	}
     	    	else {
     	    		stopService(new Intent(getBaseContext(), ScriptService.class));
-    	    		Toast.makeText(getApplicationContext(), "P2P Engine stopped",
-    	    				Toast.LENGTH_SHORT).show();
+    	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_SHORT).show();
+    	    		String msg = "KILL_DHT";
+    	    		InetAddress IPAddress = null;
+					try {
+						IPAddress = InetAddress.getByName("127.0.0.1");
+					} catch (UnknownHostException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+    	    		DatagramPacket sendPacket = 
+    	    				new DatagramPacket(msg.getBytes(), msg.length(), IPAddress, 9999); 
+    	    		DatagramSocket clientSocket = null;
+					try {
+						clientSocket = new DatagramSocket();
+					} catch (SocketException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+    	    		try {
+						clientSocket.send(sendPacket);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+    	    		clientSocket.close(); 
+
+
     	    	}
 
     	    	
