@@ -86,7 +86,10 @@ public class ScriptActivity extends Activity {
       }
 	  Bundle extras = getIntent().getExtras();
 	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
-	  tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  // tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
+	  // Arno, 2012-03-22: Default tracker is central tracker, swift now
+	  // as a default local peer which is the DHT.
+	  tracker = "tracker3.p2p-next.org:20050";
 	  destination = "/sdcard/swift/video.ts";
 	  SwiftStartDownload();
   }
