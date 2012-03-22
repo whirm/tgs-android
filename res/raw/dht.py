@@ -10,16 +10,6 @@ import time
 import threading
 import logging
 import android
-#import dht
-
-#sys.stderr = open('/sdcard/dht', 'w')
-
-
-#my_path = os.path.dirname(dht.__file__)
-#sys.path.append(my_path)
-#print >>sys.stderr, my_path
-#print >>sys.stderr, sys.path
-
 
 droid = android.Android()
 
@@ -85,7 +75,7 @@ class SwiftTraker(object):
         try:
             self.socket.bind(('', port))
         except (socket.error):
-            droid.MakeToast('EXCEP: port in use')
+            droid.log('EXCEP: port in use')
             raise
         self.channel_m = ChannelManager()
         
@@ -95,9 +85,9 @@ class SwiftTraker(object):
             try:
                 data, addr = self.socket.recvfrom(1024)
             except (socket.timeout):
-                droid.makeToast('DHT alive %d' % self.rand_num)
+                droid.log('DHT alive %d' % self.rand_num)
             except:
-                droid.makeToast('EXCEPTION in recvfrom')
+                droid.log('EXCEPTION in recvfrom')
             else:
                 stop_dht = self.handle(data, addr)
         self.dht.stop()
@@ -108,20 +98,20 @@ class SwiftTraker(object):
 #            print 'Got peers but channel is CLOSED'
 #            return
 #        if not peers:
-#            droid.makeToast("DHT: end of lookup")  
+#            droid.log("DHT: end of lookup")  
 #            print "end of lookup"
 #            self.channel_m.remove(channel)
 #            self.wfile.write('%d CLOSE\r\n' % (channel.send))
 #            return
         new_peers = []
         if peers is None:
-            droid.makeToast('End of lookup')
+            droid.log('End of lookup')
             return
         for peer in peers:
             if peer not in channel.peers:
                 channel.peers.add(peer)
                 new_peers.append(peer)
-        droid.makeToast('DHT got %d peers' % len(channel.peers))
+        droid.log('DHT got %d peers' % len(channel.peers))
         print 'got %d peer' % len(peers)
 #        for peer in new_peers:
 #            msg = '%d PEER %s:%d\r\n' % (channel.send,
@@ -189,7 +179,7 @@ class SwiftTraker(object):
                 raise NotImplemented
         print
         if remote_cid == CHANNEL_ZERO and channel.rhash:
-            droid.makeToast(">>>>>>> DHT: got HANDSHAKE from swift <<<<<<<")  
+            droid.log(">>>>>>> DHT: got HANDSHAKE from swift <<<<<<<")  
             self.dht.get_peers(channel, channel.rhash, self._on_peers_found, 0)
             # need to complete handshake
             reply = ''.join((channel.remote_cid,
@@ -197,7 +187,7 @@ class SwiftTraker(object):
                              channel.local_cid,
                              ))
             self.socket.sendto(reply, addr)
-            droid.makeToast('>>>>>>>>>>>>> GETTING PEERS <<<<<<<<<<<<<<')
+            droid.log('>>>>>>>>>>>>> GETTING PEERS <<<<<<<<<<<<<<')
             reply = ''.join((channel.remote_cid,
                              chr(PEX_RES),
                              socket.inet_aton('130.161.211.194'), #Delft
