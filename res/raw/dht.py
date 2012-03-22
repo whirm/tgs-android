@@ -62,18 +62,11 @@ MIN_BT_PORT = 1024
 MAX_BT_PORT = 2**16
 
 
-stop_server = False
-
-#droid = android.Android()
-
-
 class SwiftTraker(object):
 
     def __init__(self, port):
 #        Raul, 2012-03-09: Do not create a thread
 #        threading.Thread.__init__(self)
-
-
         my_node = Node(('127.0.0.1', 7000), RandomId())
 
         self.dht = Pymdht(my_node, '/sdcard/swift/',
@@ -81,9 +74,8 @@ class SwiftTraker(object):
                           lookup_m_mod,
                           experimental_m_mod,
                           None,
-                          logging.DEBUG,
+                          logging.ERROR,
                           False)
-
         self.rand_num = random.randint(0, 999)
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
