@@ -21,6 +21,8 @@ import java.net.UnknownHostException;
 
 public class VodoEitActivity extends ListActivity {
 	
+	Boolean mP2Prunning = Boolean.TRUE;
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class VodoEitActivity extends ListActivity {
 //    	    	intent.putExtra("video_pos", position);
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
+    	    		if (!mP2Prunning) {
+        	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_SHORT).show();
+    	    		}
 	//    	    	Play video
 	    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
 	    	    	intent.putExtra("hash", HASHES[position]);
@@ -62,6 +67,7 @@ public class VodoEitActivity extends ListActivity {
 	      	    	startActivity(intent);
     	    	}
     	    	else {
+    	    		mP2Prunning = Boolean.FALSE;
     	    		stopService(new Intent(getBaseContext(), ScriptService.class));
     	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_SHORT).show();
     	    		String msg = "KILL_DHT";
