@@ -51,7 +51,7 @@ CHANNEL_ZERO = '\0' * CHANNEL_SIZE
 MIN_BT_PORT = 1024
 MAX_BT_PORT = 2**16
 
-TOAST_EACH = 10
+TOAST_EACH = 20
 
 class SwiftTraker(object):
 
