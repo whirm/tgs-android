@@ -25,6 +25,8 @@ logger = logging.getLogger('dht')
 BUFFER_SIZE = 3000
 
 DEBUG = True
+
+from dht import droid
                             
 class ThreadedReactor(threading.Thread):
 
@@ -100,7 +102,7 @@ class ThreadedReactor(threading.Thread):
         logger.critical('run')
         try:
             while self.running:
-                dht.droid.makeToast('minitwisted alive')
+                droid.makeToast('minitwisted alive')
                 self.run_one_step()
         except:
             logger.critical( 'MINITWISTED CRASHED')
