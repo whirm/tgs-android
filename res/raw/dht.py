@@ -61,6 +61,7 @@ CHANNEL_ZERO = '\0' * CHANNEL_SIZE
 MIN_BT_PORT = 1024
 MAX_BT_PORT = 2**16
 
+TOAST_EACH = 10
 
 class SwiftTraker(object):
 
@@ -80,7 +81,7 @@ class SwiftTraker(object):
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.settimeout(5) # This is to show that the thread is running
+        self.socket.settimeout(TOAST_EACH) # This is to show that the thread is running
         try:
             self.socket.bind(('', port))
         except (socket.error):

@@ -100,7 +100,7 @@ class ThreadedReactor(threading.Thread):
         """
         self.running = True
         logger.critical('run')
-        TOAST_EACH = 50
+        TOAST_EACH = 100
         toast_countdown = TOAST_EACH
         try:
             while self.running:

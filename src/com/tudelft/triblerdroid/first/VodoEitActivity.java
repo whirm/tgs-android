@@ -56,7 +56,7 @@ public class VodoEitActivity extends ListActivity {
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
     	    		if (!mP2Prunning) {
-        	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_SHORT).show();
+        	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_LONG).show();
     	    		}
 	//    	    	Play video
 	    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
@@ -69,7 +69,7 @@ public class VodoEitActivity extends ListActivity {
     	    	else {
     	    		mP2Prunning = Boolean.FALSE;
     	    		stopService(new Intent(getBaseContext(), ScriptService.class));
-    	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_SHORT).show();
+    	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_LONG).show();
     	    		String msg = "KILL_DHT";
     	    		InetAddress IPAddress = null;
 					try {
