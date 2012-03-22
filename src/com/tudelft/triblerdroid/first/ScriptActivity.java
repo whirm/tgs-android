@@ -53,6 +53,7 @@ public class ScriptActivity extends Activity {
 	String tracker;
 	String destination;
 	boolean inmainloop = false;
+
 	
 	
 	
@@ -86,10 +87,7 @@ public class ScriptActivity extends Activity {
       }
 	  Bundle extras = getIntent().getExtras();
 	  hash = extras.getString("hash");//"280244b5e0f22b167f96c08605ee879b0274ce22"
-	  // tracker = extras.getString("tracker");//"tracker3.p2p-next.org:20024"
-	  // Arno, 2012-03-22: Default tracker is central tracker, swift now
-	  // as a default local peer which is the DHT.
-	  tracker = "tracker3.p2p-next.org:20050";
+	  tracker = extras.getString("tracker"); // See VodoEitActivity to change this
 	  destination = "/sdcard/swift/video.ts";
 	  SwiftStartDownload();
   }
@@ -236,7 +234,8 @@ public class ScriptActivity extends Activity {
 	  			NativeLib nativelib =  new NativeLib();
 	  			mVideoView = (VideoView) findViewById(R.id.surface_view);
 	  			boolean play = false, pause=false;
-	  			while(true) {
+	  			
+	  			while(VodoEitActivity.mP2Prunning) {
 	  				String progstr = nativelib.hello();
 	  				String[] elems = progstr.split("/");
 	  				long seqcomp = Long.parseLong(elems[0]);
@@ -265,8 +264,12 @@ public class ScriptActivity extends Activity {
 	  					break;
 	  				}
 	  	    		
-						Thread.sleep( 1000 );
+					Thread.sleep( 1000 );
 	  			}
+	  			
+	  			Log.w("SwiftStats", "*** SHUTDOWN SWIFT ***");
+	  			// Arno, 2012-03-22: Halts swift completely
+	  			nativelib.stop();
 	  		}
 	  		catch (Exception e ) {
 	  			//System.out.println("Stacktrace "+e.toString());

@@ -84,6 +84,12 @@ public class ScriptService extends ForegroundService {
 	}
 
 	@Override
+	  public void onDestroy() {
+	    Toast.makeText(this, "Arno says: service done", Toast.LENGTH_SHORT).show(); 
+	  }
+
+	
+	@Override
 	public void onStart(Intent intent, final int startId) {
 		//Arno, 2012-02-16: keep swift part alive when scripting goes wrong 
 		try

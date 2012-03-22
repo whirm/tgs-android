@@ -21,7 +21,7 @@ import java.net.UnknownHostException;
 
 public class VodoEitActivity extends ListActivity {
 	
-	Boolean mP2Prunning = Boolean.TRUE;
+	public static Boolean mP2Prunning = Boolean.TRUE;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -61,8 +61,10 @@ public class VodoEitActivity extends ListActivity {
 	//    	    	Play video
 	    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
 	    	    	intent.putExtra("hash", HASHES[position]);
-	//    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
-	    	    	intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
+	    	  	    // Arno, 2012-03-22: Default tracker is central tracker, swift now
+	    	  	    // has a default local peer which is the DHT.
+	    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
+	    	    	//intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
 	//    	    	intent.putExtra("destination", destination);
 	      	    	startActivity(intent);
     	    	}
