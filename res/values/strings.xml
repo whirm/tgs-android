@@ -2,31 +2,7 @@
 <resources>
 
     <string name="hello">App with swift and Python</string>
-    <string name="app_name">VODO-EIT</string>
-    <string name="loading">QMediaDroid ForegroundService...</string>
-    <string name="v1_title">Weather man</string>
-    <string name="v1_description">BBC weather report. Date xx/xx/xxxx ...</string>
-    <string name="v1_hash">032476d31f185cc80eb40582fcd028b27edaeb8d</string>
-    <string name="v1_destination">/sdcard/swift/weather-ffbase.3gp</string>
-    <string name="v1_tracker">tracker3.p2p-next.org:20021</string>
-    <string name="v1_url">http://trial.p2p-next.org/</string>
-    <string name="v2_title">Sintel</string>
-    <string name="v2_description">Sintel is a animation video ...</string>
-    <string name="v2_hash">109c16ac920a3358d5d9b17c9c4379b2395c44ba</string>
-    <string name="v2_destination">/sdcard/swift/Sintel_480p.ts</string>
-    <string name="v2_tracker">tracker3.p2p-next.org:20022</string>
-    <string name="v2_url">http://vodo.net/sintel</string>
-    <string name="v3_title">Pioneer.One S01E06</string>
-    <string name="v3_description">This is the sixth episode of the show ...</string>
-    <string name="v3_hash">280244b5e0f22b167f96c08605ee879b0274ce22</string>
-    <string name="v3_destination">/sdcard/swift/p1-s1e6-clip2-base.ts</string>
-    <string name="v3_tracker">tracker3.p2p-next.org:20024</string>
-    <string name="v3_url">http://vodo.net/pioneerone</string>
-    <string name="v_title"></string>
-    <string name="v_description"></string>
-    <string name="v_hash"></string>
-    <string name="v_destination"></string>
-    <string name="v_tracker">127.0.0.1:9999</string>
-    <string name="v_url"></string>
+    <string name="app_name">IETF-PPSP-DEMO-March2012</string>
+    <string name="loading">P2P Engine UP</string>
 
 </resources>

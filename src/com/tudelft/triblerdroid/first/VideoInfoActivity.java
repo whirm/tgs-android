@@ -32,30 +32,13 @@ public class VideoInfoActivity extends Activity {
     	
     	switch (pos) {
     		case 0: 
-    			title =  (String) getResources().getText(R.string.v1_title);
-    			description =  (String) getResources().getText(R.string.v1_description);
-    			url =  (String) getResources().getText(R.string.v1_url);
-    			hash =  (String) getResources().getText(R.string.v1_hash);
-    			tracker =  (String) getResources().getText(R.string.v1_tracker);
-    			destination =  (String) getResources().getText(R.string.v1_destination);
-    			
-        		break;
-    		case 1:
-    			title =  (String) getResources().getText(R.string.v2_title);
-    			description =  (String) getResources().getText(R.string.v2_description);
-    			url =  (String) getResources().getText(R.string.v2_url);
-    			hash =  (String) getResources().getText(R.string.v2_hash);
-    			tracker =  (String) getResources().getText(R.string.v2_tracker);
-    			destination =  (String) getResources().getText(R.string.v2_destination);
-    			break;
-    		case 2:
-    			title =  (String) getResources().getText(R.string.v3_title);
-    			description =  (String) getResources().getText(R.string.v3_description);
-    			url =  (String) getResources().getText(R.string.v3_url);
-    			hash =  (String) getResources().getText(R.string.v3_hash);
-    			tracker =  (String) getResources().getText(R.string.v3_tracker);
-    			destination =  (String) getResources().getText(R.string.v3_destination);
-    			break;
+    			title =  "Title";//(String) getResources().getText(R.string.v1_title);
+    			description = "Description";// (String) getResources().getText(R.string.v1_description);
+    			url =  "URL";//(String) getResources().getText(R.string.v1_url);
+    			hash =  "";//(String) getResources().getText(R.string.v1_hash);
+    			tracker =  "";//(String) getResources().getText(R.string.v1_tracker);
+    			destination = "";// (String) getResources().getText(R.string.v1_destination);
+
     	}
     	
     	TextView t = (TextView) findViewById(R.id.title);

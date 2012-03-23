@@ -7,7 +7,7 @@
     <application
         android:name="com.tudelft.triblerdroid.first.ScriptApplication"
         android:debuggable="true"
-        android:icon="@drawable/vodo_logo"
+        android:icon="@drawable/script_logo_48"
         android:label="@string/app_name" >
         <activity
             android:name=".IntroActivity"
