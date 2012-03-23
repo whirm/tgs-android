@@ -13,17 +13,22 @@ public class NativeLib {
   public native String start( String hash, String tracker, String filename );
 
   /** 
-   * report progress as a percentage
-   * for the moment it's a single download.. so no need for params
+   * swift mainloop. Does not exit till stop is called!
+   *
    */
-  public native int progress();
+  public native int mainloop();
 
   /** 
    * stop swift
    * return: success or failure
    */
   public native String stop();
-  
+
+  /**
+   * Returns progress string
+   */
+  public native String httpprogress(String hash);
+
   /**
    * Returns Hello World string
    */

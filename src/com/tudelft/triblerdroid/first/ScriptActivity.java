@@ -250,7 +250,7 @@ public class ScriptActivity extends Activity implements Pausable {
 					inmainloop = true;
 					Log.w("Swift","Entering libevent2 mainloop");
 					
-					int progr = nativelib.progress();
+					int progr = nativelib.mainloop();
 					
 					Log.w("Swift","LEFT MAINLOOP!");
     			}
@@ -283,7 +283,7 @@ public class ScriptActivity extends Activity implements Pausable {
 	  			boolean play = false, pause=false;
 	  			
 	  			while(IntroActivity.globalP2Prunning) {
-	  				String progstr = nativelib.hello();
+	  				String progstr = nativelib.httpprogress(args[0]);
 	  				String[] elems = progstr.split("/");
 	  				long seqcomp = Long.parseLong(elems[0]);
 	  				long asize = Long.parseLong(elems[1]);
