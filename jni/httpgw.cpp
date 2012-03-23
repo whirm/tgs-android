@@ -552,8 +552,8 @@ std::string HTTPGetProgressString()
 
 	if (http_gw_reqs_open > 0)
 	{
-		//http_gw_t *req = &http_requests[http_gw_reqs_open-1];
-		http_gw_t *req = &http_requests[0];
+		http_gw_t *req = &http_requests[http_gw_reqs_open-1];
+		//http_gw_t *req = &http_requests[0];
 		//rets << swift::SeqComplete(req->transfer);
 		rets << req->offset;
 		rets << "/";

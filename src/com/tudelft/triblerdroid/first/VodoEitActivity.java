@@ -1,8 +1,28 @@
 package com.tudelft.triblerdroid.first;
 
+/*
+ * StopP2PEngine diagram:
+ * 
+ * VodoEitActivity.onDestroy():
+ *        Always
+ * 
+ * VodoEitActivity.onUserLeaveHint:
+ *        Unfortunately also generated when SwiftAct is started,
+ *        so only stopEngine when swift doesn't have focus? Assumes
+ *        order of events (SwiftAct focus before VodoAct leave)
+ *        
+ * When in SwiftAct and Home button is pressed,
+ *        SwiftAct gets onUserLeaveHint and pause.
+ * 
+ * When in SwiftAct and Back button is pressed,
+ * 		  SwiftAct gets pause and destroy.
+ */
+
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,17 +36,21 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Timer;
 
 
 
-public class VodoEitActivity extends ListActivity {
+public class VodoEitActivity extends ListActivity implements Pausable {
 	
-	public static Boolean mP2Prunning = Boolean.TRUE;
+	boolean ispaused = false;
+	
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	  super.onCreate(savedInstanceState);
+    	  
+    	  IntroActivity.addAct(this);
 
 //    	  ArrayList<String> videoList = new ArrayList<String>();
 //    	  videoList.add((String) getResources().getText(R.string.v1_title));
@@ -55,7 +79,7 @@ public class VodoEitActivity extends ListActivity {
 //    	    	intent.putExtra("video_pos", position);
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
-    	    		if (!mP2Prunning) {
+    	    		if (!IntroActivity.globalP2Prunning) {
         	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_LONG).show();
     	    		}
 	//    	    	Play video
@@ -69,35 +93,7 @@ public class VodoEitActivity extends ListActivity {
 	      	    	startActivity(intent);
     	    	}
     	    	else {
-    	    		mP2Prunning = Boolean.FALSE;
-    	    		stopService(new Intent(getBaseContext(), ScriptService.class));
-    	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_LONG).show();
-    	    		String msg = "KILL_DHT";
-    	    		InetAddress IPAddress = null;
-					try {
-						IPAddress = InetAddress.getByName("127.0.0.1");
-					} catch (UnknownHostException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-    	    		DatagramPacket sendPacket = 
-    	    				new DatagramPacket(msg.getBytes(), msg.length(), IPAddress, 9999); 
-    	    		DatagramSocket clientSocket = null;
-					try {
-						clientSocket = new DatagramSocket();
-					} catch (SocketException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-    	    		try {
-						clientSocket.send(sendPacket);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-    	    		clientSocket.close(); 
-
-
+    	    		IntroActivity.globalIntroActivity.stopP2PEngine();
     	    	}
 
     	    	
@@ -144,5 +140,46 @@ public class VodoEitActivity extends ListActivity {
 		"3ce3f4a5bb785d5e8eb7bf3f2615e37095eb5170", // An.Honest.Man.Xvid-VODO.ts
 	};
       
+
+	  // From Pausable interface
+	public boolean isPaused()
+	{
+		  return ispaused;
+	}
+	
+	
+	public void checkAllActPaused()
+	{
+		Log.w("Swift","Checking VodoActivity" );
+		if (IntroActivity.allActPaused() > 0)
+		{
+			Log.w("Swift","Starting timer" );
+			Timer t = new Timer("AllActPausedTimer",true);
+			PauseTimer pt = new PauseTimer();
+			t.schedule(pt, 2000);
+		}
+	}
+
+	
+	public void onPause()
+	{
+			super.onPause();
+			ispaused = true;
+
+			checkAllActPaused();
+	}
+		
+	public void onResume()
+	{
+			super.onResume();
+			ispaused = false;
+	}
+		
+	public void onDestroy()
+	{
+			super.onDestroy();
+				
+			IntroActivity.delAct(this);
+	}
 }
 

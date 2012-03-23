@@ -32,11 +32,12 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.util.Timer;
 
 /**
  * @author Alexey Reznichenko (alexey.reznichenko@gmail.com)
  */
-public class ScriptActivity extends Activity {
+public class ScriptActivity extends Activity implements Pausable {
 
 	/*
 	 * Arno: From Riccardo's original SwiftBeta
@@ -54,13 +55,16 @@ public class ScriptActivity extends Activity {
 	String destination;
 	boolean inmainloop = false;
 
-	
+	boolean ispaused = false;
 	
 	
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 	
 	  super.onCreate(savedInstanceState);
+	  
+	  IntroActivity.addAct(this);
+	  
 //	  Raul, 2012-03-21: No necessary because of the notitle.fullscreen in Manifest
 //      setTheme(android.R.style.Theme_Light);
 //      requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -92,6 +96,49 @@ public class ScriptActivity extends Activity {
 	  SwiftStartDownload();
   }
 
+  
+  // From Pausable interface
+  public boolean isPaused()
+  {
+	  return ispaused;
+  }
+ 
+  
+	public void checkAllActPaused()
+	{
+		Log.w("Swift","Checking ScriptActivity" );
+		if (IntroActivity.allActPaused() > 0)
+		{
+			Log.w("Swift","Starting timer" );
+			Timer t = new Timer("AllActPausedTimer",true);
+			PauseTimer pt = new PauseTimer();
+			t.schedule(pt, 2000);
+		}
+	}
+  
+	
+  public void onPause()
+  {
+		super.onPause();
+		ispaused = true;
+
+		checkAllActPaused();
+  }
+	
+  public void onResume()
+  {
+		super.onResume();
+		ispaused = false;
+  }
+	
+  public void onDestroy()
+  {
+		super.onDestroy();
+			
+		IntroActivity.delAct(this);	
+  }
+  
+  
   /*
    *  Arno: From Riccardo's original SwiftBeta
    */
@@ -235,7 +282,7 @@ public class ScriptActivity extends Activity {
 	  			mVideoView = (VideoView) findViewById(R.id.surface_view);
 	  			boolean play = false, pause=false;
 	  			
-	  			while(VodoEitActivity.mP2Prunning) {
+	  			while(IntroActivity.globalP2Prunning) {
 	  				String progstr = nativelib.hello();
 	  				String[] elems = progstr.split("/");
 	  				long seqcomp = Long.parseLong(elems[0]);

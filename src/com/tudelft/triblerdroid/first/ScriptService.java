@@ -83,10 +83,10 @@ public class ScriptService extends ForegroundService {
 				.getInterpreterConfiguration();
 	}
 
-	@Override
-	  public void onDestroy() {
-	    Toast.makeText(this, "Arno says: service done", Toast.LENGTH_SHORT).show(); 
-	  }
+	// @Override
+	//public void onDestroy() {
+	//     Toast.makeText(this, "Arno says: service done", Toast.LENGTH_SHORT).show(); 
+	//}
 
 	
 	@Override
