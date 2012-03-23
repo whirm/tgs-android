@@ -120,6 +120,7 @@ class SwiftTraker(object):
 #        return
 
     def handle(self, data , addr):
+        droid.log("New connection")
         if data == "KILL_DHT":
             return True # stop DHT
         data_len = len(data)
