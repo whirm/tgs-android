@@ -203,7 +203,7 @@ public class ScriptService extends ForegroundService {
 	@Override
 	protected Notification createNotification() {
 	    Notification notification =
-	        new Notification(R.drawable.script_logo_48, this.getString(R.string.loading), System.currentTimeMillis());
+	        new Notification(R.drawable.swift_icon, this.getString(R.string.loading), System.currentTimeMillis());
 	    // This contentIntent is a noop.
 	    PendingIntent contentIntent = PendingIntent.getService(this, 0, new Intent(), 0);
 	    notification.setLatestEventInfo(this, this.getString(R.string.app_name), this.getString(R.string.loading), contentIntent);
