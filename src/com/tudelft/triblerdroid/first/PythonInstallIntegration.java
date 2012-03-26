@@ -90,7 +90,8 @@ public class PythonInstallIntegration extends Main {
 	      //Raul, 2012-03-08: Intro layout
 //		  setTheme(android.R.style.Theme_Light);
 //	      setContentView(R.layout.main);
-	      setContentView(R.layout.intro);
+//		  Raul, 2012-03-26: Moved to IntroActivity to remove the awkward delay to show the intro text 
+//	      setContentView(R.layout.intro);
 		  
 	  }	  
 }

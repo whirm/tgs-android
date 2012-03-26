@@ -17,7 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-       	<activity
+        <activity
+            android:name=".PythonAutoinstallActivity"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+        	<activity
             android:name=".VodoEitActivity"
             android:configChanges="keyboardHidden|orientation" >
         </activity>

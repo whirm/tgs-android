@@ -8,10 +8,10 @@ import java.util.TimerTask;
 	{
 		public void run()
 		{
-			if (IntroActivity.allActPaused() == 2)
+			if (PythonAutoinstallActivity.allActPaused() == 2)
 			{
 				Log.w("SwiftPause","Arno says: HALT ENGINE" );
-				IntroActivity.globalIntroActivity.stopP2PEngine();
+				PythonAutoinstallActivity.globalPythonAutoinstallActivity.stopP2PEngine();
 			}
 			else
 				Log.w("SwiftPause","Arno says: NOT HALT ENGINE" );

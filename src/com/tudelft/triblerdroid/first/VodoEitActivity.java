@@ -30,12 +30,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Timer;
 
 
@@ -50,7 +44,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
     public void onCreate(Bundle savedInstanceState) {
     	  super.onCreate(savedInstanceState);
     	  
-    	  IntroActivity.addAct(this);
+    	  PythonAutoinstallActivity.addAct(this);
 
 //    	  ArrayList<String> videoList = new ArrayList<String>();
 //    	  videoList.add((String) getResources().getText(R.string.v1_title));
@@ -79,7 +73,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 //    	    	intent.putExtra("video_pos", position);
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
-    	    		if (!IntroActivity.globalP2Prunning) {
+    	    		if (!PythonAutoinstallActivity.globalP2Prunning) {
         	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_LONG).show();
     	    		}
 	//    	    	Play video
@@ -94,7 +88,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 	      	    	startActivity(intent);
     	    	}
     	    	else {
-    	    		IntroActivity.globalIntroActivity.stopP2PEngine();
+    	    		PythonAutoinstallActivity.globalPythonAutoinstallActivity.stopP2PEngine();
     	    	}
 
     	    	
@@ -152,7 +146,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 	public void checkAllActPaused()
 	{
 		Log.w("Swift","Checking VodoActivity" );
-		if (IntroActivity.allActPaused() > 0)
+		if (PythonAutoinstallActivity.allActPaused() > 0)
 		{
 			Log.w("Swift","Starting timer" );
 			Timer t = new Timer("AllActPausedTimer",true);
@@ -180,7 +174,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 	{
 			super.onDestroy();
 				
-			IntroActivity.delAct(this);
+			PythonAutoinstallActivity.delAct(this);
 	}
 }
 

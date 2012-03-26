@@ -63,7 +63,7 @@ public class ScriptActivity extends Activity implements Pausable {
 	
 	  super.onCreate(savedInstanceState);
 	  
-	  IntroActivity.addAct(this);
+	  PythonAutoinstallActivity.addAct(this);
 	  
 //	  Raul, 2012-03-21: No necessary because of the notitle.fullscreen in Manifest
 //      setTheme(android.R.style.Theme_Light);
@@ -73,7 +73,7 @@ public class ScriptActivity extends Activity implements Pausable {
       setContentView(R.layout.main);
 
 
-////      Raul, 2012-03-09: initialized in IntroActivity
+////      Raul, 2012-03-09: initialized in PythonAutoinstallActivity
 //      ScriptApplication application = (ScriptApplication) getApplication();
 //      if (application.readyToStart()) {
 //        startService(new Intent(this, ScriptService.class));
@@ -107,7 +107,7 @@ public class ScriptActivity extends Activity implements Pausable {
 	public void checkAllActPaused()
 	{
 		Log.w("Swift","Checking ScriptActivity" );
-		if (IntroActivity.allActPaused() > 0)
+		if (PythonAutoinstallActivity.allActPaused() > 0)
 		{
 			Log.w("Swift","Starting timer" );
 			Timer t = new Timer("AllActPausedTimer",true);
@@ -135,7 +135,7 @@ public class ScriptActivity extends Activity implements Pausable {
   {
 		super.onDestroy();
 			
-		IntroActivity.delAct(this);	
+		PythonAutoinstallActivity.delAct(this);	
   }
   
   
@@ -282,7 +282,7 @@ public class ScriptActivity extends Activity implements Pausable {
 	  			mVideoView = (VideoView) findViewById(R.id.surface_view);
 	  			boolean play = false, pause=false;
 	  			
-	  			while(IntroActivity.globalP2Prunning) {
+	  			while(PythonAutoinstallActivity.globalP2Prunning) {
 	  				String progstr = nativelib.httpprogress(args[0]);
 	  				String[] elems = progstr.split("/");
 	  				long seqcomp = Long.parseLong(elems[0]);
