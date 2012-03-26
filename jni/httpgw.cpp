@@ -102,7 +102,8 @@ void HttpGwCloseConnection (http_gw_t* req) {
 	// REMOVE.
 	swift::Checkpoint(req->transfer);
 
-	//swift::Close(req->transfer);
+	// Arno, 2012-03-26: Raul wants delete on HTTP close for IETF demo.
+	swift::Close(req->transfer);
 
 	*req = http_requests[--http_gw_reqs_open];
 }
