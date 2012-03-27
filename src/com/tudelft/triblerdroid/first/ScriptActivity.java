@@ -187,6 +187,9 @@ public class ScriptActivity extends Activity implements Pausable {
 //				_text.setText("TODO HTTPGW engine stopped!");
 				// Arno, 2012-01-30: TODO tell HTTPGW to stop serving data
 				//nativelib.stop();
+				// Raul, 2012-03-27: don't stay here with a black screen. 
+				// Go back to video list
+				finish();
 			}
 		});
 	
