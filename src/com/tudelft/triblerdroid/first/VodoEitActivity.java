@@ -45,6 +45,12 @@ public class VodoEitActivity extends ListActivity implements Pausable {
     	  super.onCreate(savedInstanceState);
     	  
     	  PythonAutoinstallActivity.addAct(this);
+    	  
+    	  if (!PythonAutoinstallActivity.globalP2Prunning) {
+	    		Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
+  	    	Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
+    	    	startActivity(intent);
+    	  }
 
 //    	  ArrayList<String> videoList = new ArrayList<String>();
 //    	  videoList.add((String) getResources().getText(R.string.v1_title));
@@ -74,18 +80,22 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
     	    		if (!PythonAutoinstallActivity.globalP2Prunning) {
-        	    		Toast.makeText(getBaseContext(), "P2P Engine DOWN, playing from cache (if any)", Toast.LENGTH_LONG).show();
+        	    		Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
+    	    	    	Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
+    	      	    	startActivity(intent);
     	    		}
-	//    	    	Play video
-	    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
-	    	    	intent.putExtra("hash", HASHES[position]);
-	    	  	    // Arno, 2012-03-22: Default tracker is central tracker, swift now
-	    	  	    // has a default local peer which is the DHT.
-//	    	    	intent.putExtra("tracker", "192.16.127.98:20050"); // KTH's tracker
-	    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
-	    	    	//intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
-	//    	    	intent.putExtra("destination", destination);
-	      	    	startActivity(intent);
+    	    		else {
+		//    	    	Play video
+		    	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
+		    	    	intent.putExtra("hash", HASHES[position]);
+		    	  	    // Arno, 2012-03-22: Default tracker is central tracker, swift now
+		    	  	    // has a default local peer which is the DHT.
+	//	    	    	intent.putExtra("tracker", "192.16.127.98:20050"); // KTH's tracker
+		    	    	intent.putExtra("tracker", "tracker3.p2p-next.org:20050"); // Delft's tracker
+		    	    	//intent.putExtra("tracker", "127.0.0.1:9999"); // DHT
+		//    	    	intent.putExtra("destination", destination);
+		      	    	startActivity(intent);
+    	    		}
     	    	}
     	    	else {
     	    		PythonAutoinstallActivity.globalPythonAutoinstallActivity.stopP2PEngine();
@@ -168,6 +178,11 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 	{
 			super.onResume();
 			ispaused = false;
+			if (!PythonAutoinstallActivity.globalP2Prunning) {
+				Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
+				startActivity(intent);
+			  }
 	}
 		
 	public void onDestroy()

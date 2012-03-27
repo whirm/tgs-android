@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -129,6 +130,11 @@ public class ScriptActivity extends Activity implements Pausable {
   {
 		super.onResume();
 		ispaused = false;
+		if (!PythonAutoinstallActivity.globalP2Prunning) {
+			Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
+			Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
+			startActivity(intent);
+		  }
   }
 	
   public void onDestroy()
