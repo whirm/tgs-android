@@ -128,31 +128,10 @@ public class ScriptService extends ForegroundService {
 			
 			interpreter = mInterpreterConfiguration
 				.getInterpreterForScript(fileName);
-		
-			/* if (interpreter == null)
-				Log.w("Arno: Interpreter not found ");
-			else
-				Log.w("Arno: Found interpreter, installed is " + interpreter.isInstalled() ); */
 		}
 		
 		if (interpreter == null || !interpreter.isInstalled()) {
 			return;
-			
-			// Arno, 2012-03-05: Doesn't show "Install Python 2.6.2 Yes/No dialog
-			// we now download ourselves.
-			/* mLatch.countDown();
-			if (FeaturedInterpreters.isSupported(fileName)) {
-				Intent i = new Intent(this, DialogActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.putExtra(Constants.EXTRA_SCRIPT_PATH, fileName);
-				startActivity(i);
-			} else {
-				Log
-						.e(this, "Cannot find an interpreter for script "
-								+ fileName);
-			}
-			stopSelf(startId);
-			return; */
 		}
 
 		// Copies script to internal memory.
@@ -165,30 +144,21 @@ public class ScriptService extends ForegroundService {
 					.openRawResource(Script.ID));
 		}
 		copyResourcesToLocal(); // Copy all resources
+		
+		mProxy = new AndroidProxy(this, null, true);
+		mProxy.startLocal();
+		mLatch.countDown();
+//		2012-03-20, Raul: this line crashes
+//		03-20 13:25:23.815: E/sl4a.StreamGobbler:108(3875): java.io.FileNotFoundException: /mnt/sdcard/sl4a/script.py.log: open failed: ENOENT (No such file or directory)
 
-		if (Script.getFileExtension(this)
-				.equals(HtmlInterpreter.HTML_EXTENSION)) {
-			HtmlActivityTask htmlTask = ScriptLauncher.launchHtmlScript(script,
-					this, intent, mInterpreterConfiguration);
-			mFacadeManager = htmlTask.getRpcReceiverManager();
-			mLatch.countDown();
-			stopSelf(startId);
-		} else {
-			mProxy = new AndroidProxy(this, null, true);
-			mProxy.startLocal();
-			mLatch.countDown();
-//			2012-03-20, Raul: this line crashes
-//			03-20 13:25:23.815: E/sl4a.StreamGobbler:108(3875): java.io.FileNotFoundException: /mnt/sdcard/sl4a/script.py.log: open failed: ENOENT (No such file or directory)
-
-			ScriptLauncher.launchScript(script, mInterpreterConfiguration,
-					mProxy, new Runnable() {
-						@Override
-						public void run() {
-							mProxy.shutdown();
-							stopSelf(startId);
-						}
-					});
-		}
+		ScriptLauncher.launchScript(script, mInterpreterConfiguration,
+				mProxy, new Runnable() {
+			@Override
+			public void run() {
+				mProxy.shutdown();
+				stopSelf(startId);
+			}
+		});
 	}
 
 	RpcReceiverManager getRpcReceiverManager() throws InterruptedException {
@@ -238,6 +208,18 @@ public class ScriptService extends ForegroundService {
 		}
 		Log.d("No need to update " + filename);
 		return false;
+	}
+	
+	private void createP2PEngine(){
+		
+	}
+	
+	private void startP2PEngine(){
+		
+	}
+	
+	private void stopP2PEngine(){
+		
 	}
 
 	private void copyResourcesToLocal() {
