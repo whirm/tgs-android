@@ -81,6 +81,7 @@ public class ScriptService extends ForegroundService {
 		super.onCreate();
 		mInterpreterConfiguration = ((BaseApplication) getApplication())
 				.getInterpreterConfiguration();
+		createP2PEngine();
 	}
 
 	// @Override
@@ -92,10 +93,9 @@ public class ScriptService extends ForegroundService {
 	@Override
 	public void onStart(Intent intent, final int startId) {
 		super.onStart(intent, startId);
-		//Arno, 2012-02-16: keep swift part alive when scripting goes wrong 
 		try
 		{
-			createP2PEngine(startId);
+			startP2PEngine(startId);
 		}
 		catch(Exception e)
 		{
@@ -163,7 +163,12 @@ public class ScriptService extends ForegroundService {
 		return false;
 	}
 	
-	private void createP2PEngine(final int startId){
+	private void createP2PEngine(){
+		//TODO: move to createP2PEngine
+		copyResourcesToLocal(); // Copy all resources
+	}
+	
+	private void startP2PEngine(final int startId){
 		String fileName = Script.getFileName(this);
 		
 		Log.w("Arno: Looking for interpreter for script " + fileName );
@@ -181,7 +186,6 @@ public class ScriptService extends ForegroundService {
 		if (interpreter == null || !interpreter.isInstalled()) {
 			return;
 		}
-
 		// Copies script to internal memory.
 		fileName = InterpreterUtils.getInterpreterRoot(this).getAbsolutePath()
 				+ "/" + fileName;
@@ -191,9 +195,6 @@ public class ScriptService extends ForegroundService {
 			script = FileUtils.copyFromStream(fileName, getResources()
 					.openRawResource(Script.ID));
 		}
-		//TODO: move to createP2PEngine
-		copyResourcesToLocal(); // Copy all resources
-		
 		mProxy = new AndroidProxy(this, null, true);
 		mProxy.startLocal();
 		mLatch.countDown();
@@ -208,10 +209,6 @@ public class ScriptService extends ForegroundService {
 				stopSelf(startId);
 			}
 		});
-		
-	}
-	
-	private void startP2PEngine(){
 		
 	}
 	
