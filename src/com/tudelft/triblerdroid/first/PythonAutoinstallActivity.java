@@ -54,6 +54,7 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
 	 */
 	public static Boolean globalP2Prunning = Boolean.TRUE;
 	public static PythonAutoinstallActivity  globalPythonAutoinstallActivity = null;
+	private ScriptService scriptService = null;
 	public static Set<Activity>		appSet;
 	
 	
@@ -159,7 +160,7 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
       ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-          ScriptService scriptService = ((ScriptService.LocalBinder) service).getService();
+          scriptService = ((ScriptService.LocalBinder) service).getService();
           try {
             RpcReceiverManager manager = scriptService.getRpcReceiverManager();
             ActivityResultFacade resultFacade = manager.getReceiver(ActivityResultFacade.class);
@@ -174,7 +175,8 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
           // Ignore.
         }
       };
-      bindService(new Intent(this, ScriptService.class), connection, Context.BIND_AUTO_CREATE);
+//      Raul, 2012-03-28: This creates problems when restarting P2P
+//      bindService(new Intent(this, ScriptService.class), connection, Context.BIND_AUTO_CREATE);
       startService(new Intent(this, ScriptService.class));
     } else {
     	
@@ -196,6 +198,7 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
 	{
 		PythonAutoinstallActivity.globalP2Prunning = Boolean.FALSE;
 		stopService(new Intent(getBaseContext(), ScriptService.class));
+//		unbindService(scriptService);
 		
 		// Arno, 2012-03-23: Don't work if called by TimerTask :-(
 		// Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_LONG).show();
