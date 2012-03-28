@@ -91,10 +91,11 @@ public class ScriptService extends ForegroundService {
 	
 	@Override
 	public void onStart(Intent intent, final int startId) {
+		super.onStart(intent, startId);
 		//Arno, 2012-02-16: keep swift part alive when scripting goes wrong 
 		try
 		{
-			doOnStart(intent,startId);
+			createP2PEngine(startId);
 		}
 		catch(Exception e)
 		{
@@ -113,54 +114,6 @@ public class ScriptService extends ForegroundService {
 		}
 	}
 	
-		
-	private void doOnStart(Intent intent, final int startId) {
-		super.onStart(intent, startId);
-		String fileName = Script.getFileName(this);
-		
-		Log.w("Arno: Looking for interpreter for script " + fileName );
-		
-		Interpreter interpreter = null;
-		for (int i=0; i<10; i++) {
-			// Arno, 2012-03-06: Sometimes the interpreter detection stuff
-			// doesn't appear to be ready when this is called. Calling it
-			// multiple times seems to help?
-			
-			interpreter = mInterpreterConfiguration
-				.getInterpreterForScript(fileName);
-		}
-		
-		if (interpreter == null || !interpreter.isInstalled()) {
-			return;
-		}
-
-		// Copies script to internal memory.
-		fileName = InterpreterUtils.getInterpreterRoot(this).getAbsolutePath()
-				+ "/" + fileName;
-		File script = new File(fileName);
-		// TODO(raaar): Check size here!
-		if (!script.exists()) {
-			script = FileUtils.copyFromStream(fileName, getResources()
-					.openRawResource(Script.ID));
-		}
-		copyResourcesToLocal(); // Copy all resources
-		
-		mProxy = new AndroidProxy(this, null, true);
-		mProxy.startLocal();
-		mLatch.countDown();
-//		2012-03-20, Raul: this line crashes
-//		03-20 13:25:23.815: E/sl4a.StreamGobbler:108(3875): java.io.FileNotFoundException: /mnt/sdcard/sl4a/script.py.log: open failed: ENOENT (No such file or directory)
-
-		ScriptLauncher.launchScript(script, mInterpreterConfiguration,
-				mProxy, new Runnable() {
-			@Override
-			public void run() {
-				mProxy.shutdown();
-				stopSelf(startId);
-			}
-		});
-	}
-
 	RpcReceiverManager getRpcReceiverManager() throws InterruptedException {
 		mLatch.await();
 		if (mFacadeManager==null) { // Facade manage may not be available on startup.
@@ -210,7 +163,51 @@ public class ScriptService extends ForegroundService {
 		return false;
 	}
 	
-	private void createP2PEngine(){
+	private void createP2PEngine(final int startId){
+		String fileName = Script.getFileName(this);
+		
+		Log.w("Arno: Looking for interpreter for script " + fileName );
+		
+		Interpreter interpreter = null;
+		for (int i=0; i<10; i++) {
+			// Arno, 2012-03-06: Sometimes the interpreter detection stuff
+			// doesn't appear to be ready when this is called. Calling it
+			// multiple times seems to help?
+			
+			interpreter = mInterpreterConfiguration
+				.getInterpreterForScript(fileName);
+		}
+		
+		if (interpreter == null || !interpreter.isInstalled()) {
+			return;
+		}
+
+		// Copies script to internal memory.
+		fileName = InterpreterUtils.getInterpreterRoot(this).getAbsolutePath()
+				+ "/" + fileName;
+		File script = new File(fileName);
+		// TODO(raaar): Check size here!
+		if (!script.exists()) {
+			script = FileUtils.copyFromStream(fileName, getResources()
+					.openRawResource(Script.ID));
+		}
+		//TODO: move to createP2PEngine
+		copyResourcesToLocal(); // Copy all resources
+		
+		mProxy = new AndroidProxy(this, null, true);
+		mProxy.startLocal();
+		mLatch.countDown();
+//		2012-03-20, Raul: this line crashes
+//		03-20 13:25:23.815: E/sl4a.StreamGobbler:108(3875): java.io.FileNotFoundException: /mnt/sdcard/sl4a/script.py.log: open failed: ENOENT (No such file or directory)
+
+		ScriptLauncher.launchScript(script, mInterpreterConfiguration,
+				mProxy, new Runnable() {
+			@Override
+			public void run() {
+				mProxy.shutdown();
+				stopSelf(startId);
+			}
+		});
 		
 	}
 	
