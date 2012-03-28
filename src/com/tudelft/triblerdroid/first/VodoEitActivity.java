@@ -46,12 +46,6 @@ public class VodoEitActivity extends ListActivity implements Pausable {
     	  
     	  PythonAutoinstallActivity.addAct(this);
     	  
-    	  if (!PythonAutoinstallActivity.globalP2Prunning) {
-	    		Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
-  	    	Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
-    	    	startActivity(intent);
-    	  }
-
 //    	  ArrayList<String> videoList = new ArrayList<String>();
 //    	  videoList.add((String) getResources().getText(R.string.v1_title));
 //    	  videoList.add((String) getResources().getText(R.string.v2_title));
@@ -80,9 +74,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 //    	    	startActivity(intent);      	    	
     	    	if (position != 0) {
     	    		if (!PythonAutoinstallActivity.globalP2Prunning) {
-        	    		Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
-    	    	    	Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
-    	      	    	startActivity(intent);
+        	    		Toast.makeText(getBaseContext(), "You need to restart  the P2P Engine to contine", Toast.LENGTH_LONG).show();
     	    		}
     	    		else {
 		//    	    	Play video
