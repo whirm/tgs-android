@@ -40,8 +40,9 @@ public class PythonDescriptor extends Sl4aHostedInterpreter {
 	// Arno, 2012-03-05: Taken from
 	// http://code.google.com/p/python-for-android/source/browse/android/PythonForAndroid/src/com/googlecode/pythonforandroid/PythonDescriptor.java
 	// which is the newer?! code for Python4Android. Fork, exec, confusion.
-	  
-	return "http://python-for-android.googlecode.com/files/";
+	
+	return "file:/mnt/sdcard/python-for-android-files/"; //TODO Raul
+//	return "http://python-for-android.googlecode.com/files/";
     // return "http://www.mithril.com.au/android/"; // This is for testing only.
   }
 
