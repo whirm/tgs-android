@@ -63,7 +63,7 @@ public class ScriptActivity extends Activity implements Pausable {
   protected void onCreate(Bundle savedInstanceState) {
 	
 	  super.onCreate(savedInstanceState);
-	  
+
 	  PythonAutoinstallActivity.addAct(this);
 	  
 //	  Raul, 2012-03-21: No necessary because of the notitle.fullscreen in Manifest
@@ -95,6 +95,14 @@ public class ScriptActivity extends Activity implements Pausable {
 	  tracker = extras.getString("tracker"); // See VodoEitActivity to change this
 	  destination = "/sdcard/swift/video.ts";
 	  SwiftStartDownload();
+  }
+  
+  @Override
+  protected void onRestart() {
+	  super.onRestart();
+	  // Go back to video list
+	  PythonAutoinstallActivity.delAct(this);	
+	  finish();
   }
 
   
@@ -130,11 +138,6 @@ public class ScriptActivity extends Activity implements Pausable {
   {
 		super.onResume();
 		ispaused = false;
-		if (!PythonAutoinstallActivity.globalP2Prunning) {
-			Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
-			Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
-			startActivity(intent);
-		  }
   }
 	
   public void onDestroy()

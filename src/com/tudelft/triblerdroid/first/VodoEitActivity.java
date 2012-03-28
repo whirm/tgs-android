@@ -99,6 +99,8 @@ public class VodoEitActivity extends ListActivity implements Pausable {
     	    	}
     	    	else {
     	    		PythonAutoinstallActivity.globalPythonAutoinstallActivity.stopP2PEngine();
+	    	    	Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
+	      	    	startActivity(intent);
     	    	}
 
     	    	
@@ -107,7 +109,7 @@ public class VodoEitActivity extends ListActivity implements Pausable {
     	  });
     	} // Arno: If you change the order here, change HASHES[] order as well!
 	static final String[] VIDEOS = new String[] {
-		">>> STOP P2P Engine <<<",
+		">>> Re-start P2P Engine <<<",
 		"Ken Robinson says schools kill creativity", 
 		"Jill Bolte Taylor's stroke of insight", 
 		"Pranav Mistry: The thrilling potential of SixthSense technology", 
@@ -178,12 +180,8 @@ public class VodoEitActivity extends ListActivity implements Pausable {
 	{
 			super.onResume();
 			ispaused = false;
-			if (!PythonAutoinstallActivity.globalP2Prunning) {
-				Toast.makeText(getBaseContext(), "Restarting P2P Engine ...", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(getBaseContext(), PythonAutoinstallActivity.class);
-				startActivity(intent);
-			  }
 	}
+	
 		
 	public void onDestroy()
 	{

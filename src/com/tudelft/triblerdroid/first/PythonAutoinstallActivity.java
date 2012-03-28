@@ -251,6 +251,7 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
   public void onPause()
   {
 	super.onPause();
+	Log.w("Swift","PythonAutoinstallActivity.onPause" );
 	ispaused = true;
 	
 	checkAllActPaused();
@@ -259,7 +260,23 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
   public void onResume()
   {
 	super.onResume();
+	Log.w("Swift","PythonAutoinstallActivity.onResume" );
 	ispaused = false;
+  }
+  
+  public void onStart()
+  {
+	super.onStart();
+	Log.w("Swift","PythonAutoinstallActivity.onStart" );
+	if (!globalP2Prunning) {
+		prepareUninstallButton();
+	}
+  }
+  
+  public void onRestart()
+  {
+	super.onRestart();
+	Log.w("Swift","PythonAutoinstallActivity.onRestart" );
   }
 
   public void onDestroy()
