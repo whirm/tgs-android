@@ -15,8 +15,21 @@ NDK_VERSION=7b
 
 API_VERSION=10
 
-SDK_FILE="android-sdk_r$SDK_VERSION-linux.tgz"
-NDK_FILE="android-ndk-r$NDK_VERSION-linux-x86.tar.bz2"
+OS=`uname`
+
+if [ "$OS" = "Linux" ]; then
+    OS="linux"
+    SDK_FILE="android-sdk_r$SDK_VERSION-linux.tgz"
+    NDK_FILE="android-ndk-r$NDK_VERSION-linux-x86.tar.bz2"
+elif [ "$OS" = "Darwin" ]; then
+    OS="macosx"
+    SDK_FILE="android-sdk_r$SDK_VERSION-macosx.zip"
+    NDK_FILE="android-ndk-r$NDK_VERSION-darwin-x86.tar.bz2"
+else
+    echo "Unsupported OS, exiting"
+    exit 1
+fi
+
 
 
 get_package_index(){
@@ -28,7 +41,7 @@ SDK_ROOT=$(readlink -f $(dirname `which adb` 2> /dev/null)/.. 2> /dev/null)
 if [ "$SDK_ROOT" != "/" ]; then
     echo "  SDK found at $SDK_ROOT"
 else
-    SDK_ROOT=$EXTERNALS_DIR/android-sdk-linux
+    SDK_ROOT=$EXTERNALS_DIR/android-sdk-$OS
     echo "  SDK not found, will be installed at $SDK_ROOT"
 fi
 
@@ -84,7 +97,11 @@ fi
 
 if [ ! -e $SDK_ROOT ]; then
     echo "Installing SDK..."
-    tar xapf downloads/$SDK_FILE
+    if [ $OS = "macosx" ]; then
+        unzip downloads/$SDK_FILE
+    else
+        tar xapf downloads/$SDK_FILE
+    fi
     echo "  Done."
 fi
 
