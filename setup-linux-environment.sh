@@ -1,22 +1,48 @@
 #!/bin/bash
 
 #set -x 
-set -e
 
 ROOT=$PWD
+EXTERNALS_DIR=$PWD/externals
 
-SDK_VERSION=16
-#NDK_VERSION=7b
-NDK_VERSION=6
+SDK_VERSION=10
+
+#NDK_VERSION=5 #Fails to build STLPort
+#NDK_VERSION=6b
+#NDK_VERSION=6
+#NDK_VERSION=7 #Fails to build STLPort
+NDK_VERSION=7b
+
+API_VERSION=10
 
 SDK_FILE="android-sdk_r$SDK_VERSION-linux.tgz"
 NDK_FILE="android-ndk-r$NDK_VERSION-linux-x86.tar.bz2"
+
 
 get_package_index(){
     echo "$SDKS_BUFFER" | grep "$1" | awk '{ print substr($1, 0, length($1)-1)}' 
 }
 
+echo "Trying to detect an already installed android sdk..."
+SDK_ROOT=$(readlink -f $(dirname `which adb` 2> /dev/null)/.. 2> /dev/null)
+if [ "$SDK_ROOT" != "/" ]; then
+    echo "  SDK found at $SDK_ROOT"
+else
+    SDK_ROOT=$EXTERNALS_DIR/android-sdk-linux
+    echo "  SDK not found, will be installed at $SDK_ROOT"
+fi
 
+echo "Trying to detect an already installed android ndk..."
+NDK_ROOT=$(dirname `which ndk-build` 2> /dev/null)
+if [ ! -z "$NDK_ROOT" ]; then
+    echo "  NDK found at $NDK_ROOT"
+else
+    NDK_ROOT=$EXTERNALS_DIR/android-ndk-r$NDK_VERSION
+    echo "  NDK not found, will be installed at $NDK_ROOT"
+fi
+
+
+set -e
 
 echo "Ok, let's set this up..."
 echo ''
@@ -25,38 +51,68 @@ mkdir -p externals/downloads
 
 cd externals/
 
-if [ ! -e downloads/$SDK_FILE ]; then
-    wget http://dl.google.com/android/$SDK_FILE -O downloads/$SDK_FILE
+if [ -e $SDK_ROOT ]; then
+    echo "Skipping SDK download as it's already installed."
+    echo "If you want to reinstall it, please, delete $SDK_ROOT"
+    echo "And re-run this script."
+else
+    if [ ! -e downloads/$SDK_FILE ]; then
+        echo "Downloading android SDK..."
+        wget http://dl.google.com/android/$SDK_FILE -O downloads/$SDK_FILE
+    else
+        echo "Skipping SDK download, already downlodaded."
+        echo "If you want to redownload it, please delete $PWD/downloads/$SDK_FILE"
+        echo "And re-run this script."
+    fi
 fi
 
-if [ ! -e downloads/$NDK_FILE ]; then
-    wget http://dl.google.com/android/ndk/$NDK_FILE -O downloads/$NDK_FILE
+if [ -e $NDK_ROOT ]; then
+    echo "Skipping NDK download as it's already installed."
+    echo "If you want to reinstall it, please, delete $NDK_ROOT"
+    echo "And re-run this script."
+else
+    if [ ! -e downloads/$NDK_FILE ]; then
+        echo "Downloading android NDK..."
+        wget http://dl.google.com/android/ndk/$NDK_FILE -O downloads/$NDK_FILE
+    else
+        echo "Skipping NDK download, already downlodaded."
+        echo "If you want to redownload it, please delete $PWD/downloads/$NDK_FILE"
+        echo "And re-run this script."
+    fi
 fi
 
-if [ ! -e android-sdk-linux ]; then
+
+if [ ! -e $SDK_ROOT ]; then
+    echo "Installing SDK..."
     tar xapf downloads/$SDK_FILE
+    echo "  Done."
 fi
 
-if [ ! -e android-ndk-r7b ]; then
+if [ ! -e $NDK_ROOT ]; then
+    echo "Installing NDK..."
     tar xapf downloads/$NDK_FILE
+    echo "  Done."
 fi
 
-if [ ! -e android-sdk-linux/platforms/android-14 ]; then
-    cd android-sdk-linux/tools
 
-    SDKS_BUFFER=`./android list sdk`
+export PATH=$PATH:$SDK_ROOT/tools:$SDK_ROOT/platform-tools:$NDK_ROOT:$PWD/externals/android-scripting/tools/agcc
 
-    PLATFORM_4=`get_package_index "SDK Platform Android 4.0, API 14"`
+echo "Installing android platforms and tools..."
+if [ ! -e $SDK_ROOT/platforms/android-$API_VERSION ]; then
+    #cd android-sdk-linux/tools
+
+    SDKS_BUFFER=`android list sdk`
+
+    PLATFORM=`get_package_index "SDK Platform Android .*, API $API_VERSION"`
     PLATFORM_TOOLS=`get_package_index "Android SDK Platform-tools"`
 
-    ./android update sdk --no-ui --filter $PLATFORM_4,$PLATFORM_TOOLS,tool,platform-tool 
+    android update sdk --no-ui --filter $PLATFORM,$PLATFORM_TOOLS,tool,platform-tool 
 
-    ./android update adb
+    android update adb
 
-    cd ..
-
-    platform-tools/adb kill-server
+    adb kill-server
 fi
+
 
 if [ ! -z "`uname -a | grep x86_64`" ]; then
     echo "64 bit system detected, installing ia32-libs"
@@ -80,6 +136,7 @@ if [ ! -z "`uname -a | grep x86_64`" ]; then
     set -e
 fi
 
+
 cd $ROOT/externals
 
 #We aren't using this ATM
@@ -91,9 +148,13 @@ cd $ROOT/externals
 
 cd $ROOT
 
-export PATH=$PATH:$PWD/externals/android-ndk-r$NDK_VERSION:$PWD/externals/android-sdk-linux/tools:$PWD/externals/android-sdk-linux/platform-tools:$PWD/externals/android-scripting/tools/agcc
+#TODO: Detect if STLport has been already built or not.
+#echo ''
+#echo "Prebuilding STLport..."
+##Use bash instead of sh as it contains bashisms...
+#bash $NDK_ROOT/build/tools/build-stlport.sh
+#echo ''
 
-echo ''
 echo "Building JNI"
 ndk-build -C $ROOT/jni
 
