@@ -4,9 +4,9 @@ set -e
 
 ROOT=$PWD
 
-SDK_VERSION=16
-#NDK_VERSION=7b
-NDK_VERSION=6
+SDK_VERSION=17
+NDK_VERSION=7b
+#NDK_VERSION=6
 
 
 A_SDK=$ROOT/externals/android-sdk-linux
