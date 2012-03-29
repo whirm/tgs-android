@@ -37,7 +37,7 @@ get_package_index(){
 }
 
 echo "Trying to detect an already installed android sdk..."
-SDK_ROOT=$(readlink -f $(dirname `which adb` 2> /dev/null)/.. 2> /dev/null)
+SDK_ROOT=$(readlink -f $(dirname `which android` 2> /dev/null)/.. 2> /dev/null)
 if [ "$SDK_ROOT" != "/" ]; then
     echo "  SDK found at $SDK_ROOT"
 else
