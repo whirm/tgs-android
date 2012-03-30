@@ -3,22 +3,47 @@
 set -e
 
 ROOT=$PWD
+EXTERNALS_DIR=$PWD/externals
 
 SDK_VERSION=17
 NDK_VERSION=7b
 #NDK_VERSION=6
 
+OS=`uname`
+if [ "$OS" = "Linux" ]; then
+    OS="linux"
+elif [ "$OS" = "Darwin" ]; then
+    OS="macosx"
+else
+    echo "Unsupported OS, exiting"
+    exit 1
+fi
 
-A_SDK=$ROOT/externals/android-sdk-linux
-A_NDK=$ROOT/externals/android-ndk-r$NDK_VERSION
+PYTHON_LIB_VERSION=r16
 
-export PATH=$PATH:$A_NDK
+echo "Trying to detect an already installed android sdk..."
+SDK_ROOT=$(readlink -f $(dirname `which android` 2> /dev/null)/.. 2> /dev/null)
+if [ "$SDK_ROOT" != "/" ]; then
+    echo "  SDK found at $SDK_ROOT"
+else
+    SDK_ROOT=$EXTERNALS_DIR/android-sdk-$OS
+fi
 
-export ANDROID_SDK=$A_SDK
+
+echo "Trying to detect an already installed android ndk..."
+NDK_ROOT=$(dirname `which ndk-build` 2> /dev/null)
+if [ ! -z "$NDK_ROOT" ]; then
+    echo "  NDK found at $NDK_ROOT"
+else
+    NDK_ROOT=$EXTERNALS_DIR/android-ndk-r$NDK_VERSION
+fi
+
+
+export PATH=$PATH:$NDK_ROOT
+
+export ANDROID_SDK=$SDK_ROOT
 #Build standalone toolchain
-export ANDROID_NDK=$A_NDK
-#export SYSROOT=$A_NDK/platforms/android-3/arch-arm
-#export NDK=$A_NDK
+export ANDROID_NDK=$NDK_ROOT
 export ANDROID_NDK_TOOLCHAIN_ROOT=$PWD/externals/android-toolchain
 #$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --platform=android-$SDK_VERSION --install-dir=$ANDROID_NDK_TOOLCHAIN_ROOT
 $ANDROID_NDK/build/tools/make-standalone-toolchain.sh --install-dir=$ANDROID_NDK_TOOLCHAIN_ROOT
@@ -38,9 +63,18 @@ if [ ! -e python-for-android ]; then
     hg clone https://code.google.com/p/python-for-android/
 fi
 
-echo "Installing build dependencies"
-sudo apt-get build-dep python2.6
-sudo apt-get install lib32z1-dev lib32z1 swig
+# for linux, install build deps with apt-get
+if [ "$OS" = "linux" ]; then
+
+    echo "Installing build dependencies"
+    sudo apt-get build-dep python2.6
+    sudo apt-get install lib32z1-dev lib32z1 swig
+fi
+
+# for OS X, set build vars (do we need this if using pre-built libs?)
+if [ "$OS" = "macosx" ]; then
+    export MACOSX_DEPLOYMENT_TARGET=`sw_vers -productVersion | grep -Po '[0-9]+\.[0-9]*'`
+fi
 
 #export LDFLAGS="-L /usr/lib/i386-linux-gnu/"
 export LDFLAGS="-L /usr/lib32  -L  $ROOT/externals/android-ndk-r$NDK_VERSION/platforms/android-5/arch-arm/usr/lib/"
@@ -73,7 +107,7 @@ ant
 cd $ROOT/externals
 
 #Get python-lib
-PYTHON_LIB=python-lib_r16.zip
+PYTHON_LIB=python-lib_$PYTHON_LIB_VERSION.zip
 if [ ! -e downloads/$PYTHON_LIB ]; then
     cd downloads
     wget https://python-for-android.googlecode.com/files/$PYTHON_LIB
