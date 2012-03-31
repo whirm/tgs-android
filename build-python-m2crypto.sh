@@ -69,6 +69,8 @@ if [ "$OS" = "linux" ]; then
     echo "Installing build dependencies"
     sudo apt-get build-dep python2.6
     sudo apt-get install lib32z1-dev lib32z1 swig
+    # 64 bit systems may be missing ld-linux.so.2
+    sudo apt-get install libc6-i386 ia32-libs
 fi
 
 # for OS X, set build vars (do we need this if using pre-built libs?)
@@ -97,10 +99,13 @@ export LDFLAGS='-Wl,--fix-cortex-a8'
 #TODO:
 #This is failing ATM If you dont modify the build.xml files to use android-14
 cd $ROOT/externals/python-for-android/android/Utils
+mkdir -p dist
 ant
 cd $ROOT/externals/python-for-android/android/Common
+mkdir -p dist
 ant
 cd $ROOT/externals/python-for-android/android/InterpreterForAndroid
+mkdir -p dist
 ant
 
 
@@ -137,5 +142,8 @@ source ..//python-for-android/python-modules/python-lib/setup.sh
 #export PY4A_INC=$PY4A_INC/python2.6
 #export PYTHONPATH=$PYTHONPATH:$ROOT/externals/python-for-android/python-modules/python-lib/python
 
+# TODO add setuptools to externals/python-for-android/python-build/host
+# ie execute http://peak.telecommunity.com/dist/ez_setup.py
 
-python2.6 setup.py bdist_egg 
+# TODO patch m2crypt setup files per http://code.google.com/p/python-for-android/wiki/BuildingModules
+../python-for-android/python-build/host/bin/python2.6 setup.py bdist_egg 
