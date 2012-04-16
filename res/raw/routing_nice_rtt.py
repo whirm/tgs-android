@@ -18,19 +18,19 @@ import heapq
 import logging
 
 import os, sys
-#this_dir = os.path.dirname(os.path.abspath(__file__))
-#root_dir = os.path.join(this_dir, '..')
-#sys.path.append(root_dir)
+this_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.join(this_dir, '..')
+sys.path.append(root_dir)
 
-import ptime as time
-import identifier as identifier
-import message as message
-import node as node
-from node import Node, RoutingNode
-from routing_table import RoutingTable
-import bootstrap as bootstrap
+import core.ptime as time
+import core.identifier as identifier
+import core.message as message
+import core.node as node
+from core.node import Node, RoutingNode
+from core.routing_table import RoutingTable
+import core.bootstrap as bootstrap
 
-#sys.path.pop()
+sys.path.pop()
 
 logger = logging.getLogger('dht')
 
@@ -330,9 +330,8 @@ class RoutingManager(object):
         return
         
     def on_error_received(self, node_addr):
-        if self.bootstrapper.is_bootstrap_node(node_):
-            return
-
+        # if self.bootstrapper.is_bootstrap_node(node_):
+        #     return
         return
     
     def on_timeout(self, node_):
