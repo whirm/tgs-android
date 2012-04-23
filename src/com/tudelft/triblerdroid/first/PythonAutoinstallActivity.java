@@ -48,80 +48,13 @@ import java.util.Timer;
 /**
  * @author Alexey Reznichenko (alexey.reznichenko@gmail.com)
  */
-public class PythonAutoinstallActivity extends PythonInstallIntegration implements Pausable {
+public class PythonAutoinstallActivity extends PythonInstallIntegration {
 
 
-	boolean ispaused = false;
-	
-	/*
-	 * Arno, 2012-03-23: Global admin of activities
-	 */
-	public static Boolean globalP2Prunning = Boolean.TRUE;
-	public static PythonAutoinstallActivity  globalPythonAutoinstallActivity = null;
-	private ScriptService scriptService = null;
-	public static Set<Activity>		appSet;
-	
-	
-	public static synchronized void addAct(Activity a)
-	{
-		if (appSet == null)
-			appSet = new HashSet<Activity>();
-		
-		Log.w("Swift","ADD activity" + a );
-		appSet.add(a);
-	}
-	
-	public static synchronized void delAct(Activity a)
-	{
-		try
-		{
-			appSet.remove(a);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	public static synchronized int allActPaused()
-	{
-		Log.w("Swift","Pausing activitiy set is " + appSet.size() );
-		
-		
-		Iterator<Activity> iter = appSet.iterator();
-		boolean oneHasFocus = false;
-		while(iter.hasNext()) {
-
-			Activity a = (Activity)iter.next();
-			if (a.hasWindowFocus())
-				oneHasFocus = true;
-		    Pausable p = (Pausable)a; 
-		    if (!p.isPaused())
-		    {
-		    	return 0;
-		    }
-		    	
-		}
-		if (!oneHasFocus)
-			return 2; // All paused and none have focus
-		else
-			return 1; // All paused
-	}
-	
-	public static synchronized int numActs()
-	{
-		return appSet.size();
-	}
-	
 	
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
-
-	  globalPythonAutoinstallActivity = this;
-	  PythonAutoinstallActivity.addAct(this);
-	  
-	  globalP2Prunning = Boolean.TRUE;
 	  
 	  
 	  setContentView(R.layout.pythonautoinstall);
@@ -193,129 +126,28 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
 	 * service when Python is installed.
 	 */
 	Log.w("QMediaPython","prepareUninstallButton");
-    if (Constants.ACTION_LAUNCH_SCRIPT_FOR_RESULT.equals(getIntent().getAction())) {
-    	
-      // Arno: layout moved up
-      //setTheme(android.R.style.Theme_Dialog);
-      //setContentView(R.layout.dialog);
-      ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-          scriptService = ((ScriptService.LocalBinder) service).getService();
-          try {
-            RpcReceiverManager manager = scriptService.getRpcReceiverManager();
-            ActivityResultFacade resultFacade = manager.getReceiver(ActivityResultFacade.class);
-            resultFacade.setActivity(PythonAutoinstallActivity.this);
-          } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-          // Ignore.
-        }
-      };
-//      Raul, 2012-03-28: This creates problems when restarting P2P
-//      bindService(new Intent(this, ScriptService.class), connection, Context.BIND_AUTO_CREATE);
-      startService(new Intent(this, ScriptService.class));
-    } else {
-    	
-    	
-      ScriptApplication application = (ScriptApplication) getApplication();
-      if (application.readyToStart()) {
-        startService(new Intent(this, ScriptService.class));
-      }
-      // Arno, 2012-02-15: Hack to keep this activity alive.
-      // finish();
-    }
 //    Raul, 2012-03-26: Autoinstall done, show video list (no need for button) 
-    Intent intent = new Intent(getBaseContext(), VodoEitActivity.class);
+    Intent intent = new Intent(getBaseContext(), P2PStartActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
   }
-
-  
-	public void stopP2PEngine()
-	{
-		PythonAutoinstallActivity.globalP2Prunning = Boolean.FALSE;
-		stopService(new Intent(getBaseContext(), ScriptService.class));
-//		unbindService(scriptService);
-		
-		// Arno, 2012-03-23: Don't work if called by TimerTask :-(
-		// Toast.makeText(getBaseContext(), "P2P Engine DOWN", Toast.LENGTH_LONG).show();
-		
-		String msg = "KILL_DHT";
-		InetAddress IPAddress = null;
-		try {
-			IPAddress = InetAddress.getByName("127.0.0.1");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		DatagramPacket sendPacket = 
-				new DatagramPacket(msg.getBytes(), msg.length(), IPAddress, 9999); 
-		DatagramSocket clientSocket = null;
-		try {
-			clientSocket = new DatagramSocket();
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		try {
-			clientSocket.send(sendPacket);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		clientSocket.close(); 
-	}
-	
-  
-  // From Pausable interface
-  public boolean isPaused()
-  {
-	  return ispaused;
-  }
-  
-
-
-	public void checkAllActPaused()
-	{
-		Log.w("Swift","Checking PythonAutoinstallActivityActivity" );
-		if (PythonAutoinstallActivity.allActPaused() > 0)
-		{
-			Log.w("Swift","Starting timer" );
-			Timer t = new Timer("AllActPausedTimer",true);
-			PauseTimer pt = new PauseTimer();
-			t.schedule(pt, 2000);
-		}
-	}
-
   
   public void onPause()
   {
 	super.onPause();
 	Log.w("Swift","PythonAutoinstallActivity.onPause" );
-	ispaused = true;
-	
-	checkAllActPaused();
   }
 
   public void onResume()
   {
 	super.onResume();
 	Log.w("Swift","PythonAutoinstallActivity.onResume" );
-	ispaused = false;
   }
   
   public void onStart()
   {
 	super.onStart();
 	Log.w("Swift","PythonAutoinstallActivity.onStart" );
-	if (!globalP2Prunning) {
-		prepareUninstallButton();
-	}
   }
   
   public void onRestart()
@@ -327,7 +159,5 @@ public class PythonAutoinstallActivity extends PythonInstallIntegration implemen
   public void onDestroy()
   {
 		super.onDestroy();
-		
-		PythonAutoinstallActivity.delAct(this);	
   }
 }

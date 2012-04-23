@@ -50,7 +50,7 @@ public class VideoInfoActivity extends Activity {
   	  
     	b_play.setOnClickListener(new OnClickListener() {
       	    public void onClick(View view) {
-      	    	Intent intent = new Intent(getBaseContext(), ScriptActivity.class);
+      	    	Intent intent = new Intent(getBaseContext(), VideoPlayerActivity.class);
     	    	intent.putExtra("hash", hash);
     	    	intent.putExtra("tracker", tracker);
     	    	intent.putExtra("destination", destination);

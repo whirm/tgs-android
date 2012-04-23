@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="42dp"
-        android:text="Checking dependencies.\nStarting P2P Engine.\n\nThis may take a few seconds."
+        android:text="Checking dependencies.\n\nThis may take a few seconds."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

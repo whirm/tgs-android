@@ -195,7 +195,7 @@ class SwiftTraker(object):
                              chr(20050>>8),
                              chr(20050%256),
                              chr(PEX_RES),
-                             socket.inet_aton('192.16.125.242'), #KTH
+                             socket.inet_aton('192.16.127.98'), #KTH
                              chr(20050>>8),
                              chr(20050%256),
                              ))

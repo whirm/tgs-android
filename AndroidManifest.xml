@@ -21,8 +21,12 @@
             android:name=".PythonAutoinstallActivity"
             android:configChanges="keyboardHidden|orientation" >
         </activity>
-        	<activity
-            android:name=".VodoEitActivity"
+        <activity
+            android:name=".P2PStartActivity"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+        <activity
+            android:name=".VideoListActivity"
             android:configChanges="keyboardHidden|orientation" >
         </activity>
         <activity
@@ -30,7 +34,7 @@
             android:configChanges="keyboardHidden|orientation" >
         </activity>
         <activity
-            android:name=".ScriptActivity"
+            android:name=".VideoPlayerActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden">
