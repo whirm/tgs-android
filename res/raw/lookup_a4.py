@@ -12,9 +12,9 @@ this_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.join(this_dir, '..')
 sys.path.append(root_dir)
 
-import core.ptime as time
-import core.identifier as identifier
-import core.message as message
+import ptime as time
+import identifier as identifier
+import message as message
 
 sys.path.pop()
 
