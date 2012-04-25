@@ -134,38 +134,10 @@ public class SwiftService extends ForegroundService {
 		return notification;
 	}
 
-	private boolean needsToBeUpdated(String filename, InputStream content) {
-		File script = new File(filename);
-		FileInputStream fin;
-		Log.d("Checking if " + filename + " exists");
-
-		if (!script.exists()) {
-			Log.d("not found");
-			return true;
-		}
-
-		Log.d("Comparing file with content");
-		try {
-			fin = new FileInputStream(filename);
-			int c;
-			while ((c = fin.read()) != -1) {
-				if (c != content.read()) {
-					Log.d("Something changed replacing");
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			Log.d("Something failed during comparing");
-			Log.e(e);
-			return true;
-		}
-		Log.d("No need to update " + filename);
-		return false;
-	}
 	
 	private void createP2PEngine(){
-		//TODO: move to createP2PEngine
-		copyResourcesToLocal(); // Copy all resources
+		//Raul, 2012-04-25: Moved to P2PStart.java
+		//copyResourcesToLocal(); // Copy all resources
 	}
 	
 	private void startP2PEngine(final int startId){
@@ -216,33 +188,4 @@ public class SwiftService extends ForegroundService {
 		
 	}
 
-	private void copyResourcesToLocal() {
-		String name, sFileName;
-		InputStream content;
-		R.raw a = new R.raw();
-		java.lang.reflect.Field[] t = R.raw.class.getFields();
-		Resources resources = getResources();
-		for (int i = 0; i < t.length; i++) {
-			try {
-				name = resources.getText(t[i].getInt(a)).toString();
-				sFileName = name.substring(name.lastIndexOf('/') + 1, name
-						.length());
-				content = getResources().openRawResource(t[i].getInt(a));
-
-				// Copies script to internal memory only if changes were made
-				sFileName = InterpreterUtils.getInterpreterRoot(this)
-						.getAbsolutePath()
-						+ "/" + sFileName;
-				if (needsToBeUpdated(sFileName, content)) {
-					Log.d("Copying from stream " + sFileName);
-					content.reset();
-					FileUtils.copyFromStream(sFileName, content);
-				}
-				FileUtils.chmod(new File(sFileName), 0755);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 }

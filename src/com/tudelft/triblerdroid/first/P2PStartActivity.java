@@ -20,18 +20,18 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.googlecode.android_scripting.Constants;
+import com.googlecode.android_scripting.FileUtils;
 import com.googlecode.android_scripting.facade.ActivityResultFacade;
+import com.googlecode.android_scripting.interpreter.InterpreterUtils;
 import com.googlecode.android_scripting.jsonrpc.RpcReceiverManager;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -125,6 +125,7 @@ public class P2PStartActivity extends Activity implements Pausable {
 	  globalP2Prunning = Boolean.TRUE;
 	  
 	  setContentView(R.layout.p2p);
+	  copyResourcesToLocal();
   }
 	
   private void copyFile(InputStream in, OutputStream out) throws IOException {
@@ -238,6 +239,66 @@ public class P2PStartActivity extends Activity implements Pausable {
 			PauseTimer pt = new PauseTimer();
 			t.schedule(pt, 2000);
 		}
+	}
+
+	
+	private void copyResourcesToLocal() {
+		String name, sFileName;
+		InputStream content;
+		R.raw a = new R.raw();
+		java.lang.reflect.Field[] t = R.raw.class.getFields();
+		Resources resources = getResources();
+		for (int i = 0; i < t.length; i++) {
+			try {
+				name = resources.getText(t[i].getInt(a)).toString();
+				sFileName = name.substring(name.lastIndexOf('/') + 1, name
+						.length());
+				content = getResources().openRawResource(t[i].getInt(a));
+
+				// Copies script to internal memory only if changes were made
+				sFileName = InterpreterUtils.getInterpreterRoot(this)
+						.getAbsolutePath()
+						+ "/" + sFileName;
+				if (needsToBeUpdated(sFileName, content)) {
+					Log.d("Swift", "Copying from stream " + sFileName);
+					content.reset();
+					FileUtils.copyFromStream(sFileName, content);
+				}
+				FileUtils.chmod(new File(sFileName), 0755);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private boolean needsToBeUpdated(String filename, InputStream content) {
+		File script = new File(filename);
+		FileInputStream fin;
+		Log.d("Swift", "Checking if " + filename + " exists");
+
+		if (!script.exists()) {
+			Log.d("Swift", "not found");
+			return true;
+		}
+
+		Log.d("Swift", "Comparing file with content");
+		try {
+			fin = new FileInputStream(filename);
+			int c;
+			while ((c = fin.read()) != -1) {
+				if (c != content.read()) {
+					Log.d("Swift", "Something changed replacing");
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			Log.d("Swift", "Something failed during comparing");
+//			Log.e("Swift", e);
+			return true;
+		}
+		Log.d("Swift", "No need to update " + filename);
+		return false;
 	}
 
   
