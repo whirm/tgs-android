@@ -44,7 +44,7 @@
 		    </intent-filter>
         </activity>
         
-        <service android:name="com.tudelft.triblerdroid.first.ScriptService" />
+        <service android:name=".SwiftService" />
 
         <provider
             android:authorities="com.tudelft.triblerdroid.first.pythonprovider"

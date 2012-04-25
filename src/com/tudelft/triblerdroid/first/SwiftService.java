@@ -51,7 +51,7 @@ import java.util.concurrent.CountDownLatch;
  * @author Alexey Reznichenko (alexey.reznichenko@gmail.com)
  * @author Manuel Naranjo (manuel@aircable.net)
  */
-public class ScriptService extends ForegroundService {
+public class SwiftService extends ForegroundService {
 	private final static int NOTIFICATION_ID = NotificationIdFactory.create();
 	private final CountDownLatch mLatch = new CountDownLatch(1);
 	private final IBinder mBinder;
@@ -61,12 +61,12 @@ public class ScriptService extends ForegroundService {
     private AndroidProxy mProxy;
     
 	public class LocalBinder extends Binder {
-		public ScriptService getService() {
-			return ScriptService.this;
+		public SwiftService getService() {
+			return SwiftService.this;
 		}
 	}
 	
-	public ScriptService() {
+	public SwiftService() {
 		super(NOTIFICATION_ID);
 		mBinder = new LocalBinder();
 	}

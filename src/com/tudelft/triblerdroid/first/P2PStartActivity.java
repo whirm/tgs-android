@@ -58,7 +58,7 @@ public class P2PStartActivity extends Activity implements Pausable {
 	 */
 	public static Boolean globalP2Prunning = Boolean.TRUE;
 	public static P2PStartActivity  globalP2PStartActivity = null;
-	private ScriptService scriptService = null;
+	private SwiftService scriptService = null;
 
 	public static Set<Activity>		appSet;
 	
@@ -149,7 +149,7 @@ public class P2PStartActivity extends Activity implements Pausable {
       ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-          scriptService = ((ScriptService.LocalBinder) service).getService();
+          scriptService = ((SwiftService.LocalBinder) service).getService();
           try {
             RpcReceiverManager manager = scriptService.getRpcReceiverManager();
             ActivityResultFacade resultFacade = manager.getReceiver(ActivityResultFacade.class);
@@ -166,13 +166,13 @@ public class P2PStartActivity extends Activity implements Pausable {
       };
 //      Raul, 2012-03-28: This creates problems when restarting P2P
 //      bindService(new Intent(this, ScriptService.class), connection, Context.BIND_AUTO_CREATE);
-      startService(new Intent(this, ScriptService.class));
+      startService(new Intent(this, SwiftService.class));
     } else {
     	
     	
       ScriptApplication application = (ScriptApplication) getApplication();
       if (application.readyToStart()) {
-        startService(new Intent(this, ScriptService.class));
+        startService(new Intent(this, SwiftService.class));
       }
       // Arno, 2012-02-15: Hack to keep this activity alive.
       // finish();
@@ -187,7 +187,7 @@ public class P2PStartActivity extends Activity implements Pausable {
 	public void stopP2PEngine()
 	{
 		P2PStartActivity.globalP2Prunning = Boolean.FALSE;
-		stopService(new Intent(getBaseContext(), ScriptService.class));
+		stopService(new Intent(getBaseContext(), SwiftService.class));
 //		unbindService(scriptService);
 		
 		// Arno, 2012-03-23: Don't work if called by TimerTask :-(
