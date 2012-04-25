@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -145,6 +144,9 @@ public class VideoPlayerActivity extends Activity implements Pausable {
 		super.onDestroy();
 			
 		P2PStartActivity.delAct(this);	
+		Log.w("SwiftStats", "*** SHUTDOWN SWIFT ***");
+		// Raul, 2012-04-25: Halts swift completely on destroy
+		_statsTask.cancel(true);
   }
   
   
@@ -176,7 +178,7 @@ public class VideoPlayerActivity extends Activity implements Pausable {
 	protected void SwiftCreateProgress() {
 		_dialog = new ProgressDialog(VideoPlayerActivity.this);
 	  _dialog.setCancelable(true);
-	  _dialog.setMessage("Downloading...");
+	  _dialog.setMessage("Buffering...");
 	  // set the progress to be horizontal
 	  _dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 	  // reset the bar to the default value of 0
@@ -317,7 +319,7 @@ public class VideoPlayerActivity extends Activity implements Pausable {
 	  	    			
 	  	    		});
 	
-	  				if (asize > 0 && seqcomp == asize)
+	  				if (1==0)//Raul (asize > 0 && seqcomp == asize)
 	  				{
 	  					Log.w("SwiftStats", "*** COMPLETE, STOP MONITOR ***");
 	  					break;
