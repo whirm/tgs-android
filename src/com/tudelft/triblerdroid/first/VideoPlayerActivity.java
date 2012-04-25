@@ -290,7 +290,7 @@ public class VideoPlayerActivity extends Activity implements Pausable {
 	  		ret = "Received wrong number of parameters during initialization!";
 	  	}
 	  	else {
-	  		try {
+	  		try {//TODO: catch InterruptedException (onDestroy)
 	
 	  			NativeLib nativelib =  new NativeLib();
 	  			mVideoView = (VideoView) findViewById(R.id.surface_view);
@@ -316,16 +316,10 @@ public class VideoPlayerActivity extends Activity implements Pausable {
 	          				_dialog.setProgress(_seqCompInt.intValue() );
 	
 	  	    			}
-	  	    			
 	  	    		});
-	
-	  				if (1==0)//Raul (asize > 0 && seqcomp == asize)
-	  				{
-	  					Log.w("SwiftStats", "*** COMPLETE, STOP MONITOR ***");
-	  					break;
-	  				}
-	  	    		
-					Thread.sleep( 1000 );
+	  				//Raul, 20120425: removed break which caused playback interruption when
+	  	    		//(asize > 0 && seqcomp == asize) (e.i, file downloaded)
+	  				Thread.sleep( 1000 );
 	  			}
 	  			
 	  			Log.w("SwiftStats", "*** SHUTDOWN SWIFT ***");
