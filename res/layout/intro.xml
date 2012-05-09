@@ -23,4 +23,20 @@
         android:text="This application streams video via P2P. It is highly recommended to use this app while connected via Wi-Fi. Using this app on a mobile connection (3G for instance) may consume your monthly allowance or cause extra cost for you. P2P streaming may be blocked by your mobile operator, causing poor quality of experience."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/b_continue"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="36dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:src="@drawable/all_logos" />
+
+    </LinearLayout>
+
 </RelativeLayout>
